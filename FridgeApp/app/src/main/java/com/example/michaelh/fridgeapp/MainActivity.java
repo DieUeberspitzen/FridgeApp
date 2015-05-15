@@ -43,7 +43,7 @@ public class MainActivity extends ActionBarActivity {
                 integrator.initiateScan(IntentIntegrator.PRODUCT_CODE_TYPES);
 
                 TextView placeholder = (TextView)findViewById(R.id.code_text);
-                placeholder.setText("ulululul");
+                //placeholder.setText("ulululul");
             }
 
 
