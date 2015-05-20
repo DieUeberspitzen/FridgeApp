@@ -39,24 +39,48 @@ public class MainActivity extends ActionBarActivity {
                 integrator.addExtra("SCAN_HEIGHT", 480);
                 integrator.addExtra("SCAN_MODE", "QR_CODE_MODE,PRODUCT_MODE");
                 //customize the prompt message before scanning
-                integrator.addExtra("PROMPT_MESSAGE", "Scanner Start!");
+                integrator.addExtra("PROMPT_MESSAGE", "Scannen Sie das gewünschte Produkt!");
                 integrator.initiateScan(IntentIntegrator.PRODUCT_CODE_TYPES);
 
-                TextView placeholder = (TextView)findViewById(R.id.code_text);
+                //TextView placeholder = (TextView)findViewById(R.id.code_text);
                 //placeholder.setText("ulululul");
             }
 
 
+
+
+            /*
             public void onActivityResult(int requestCode, int resultCode, Intent intent) {
                 IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
                 if (scanResult != null) {
                     String re = scanResult.getContents();
                     Log.d("code", re);
+
+                    TextView placeholder = (TextView)findViewById(R.id.code_text);
+                    placeholder.setText("ulululul");
                 }
                 // else continue with any other code you need in the method
 
             }
+            */
         });
+    }
+
+
+    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
+
+        if (result != null) {
+            String contents = result.getContents();
+            TextView placeholder = (TextView)findViewById(R.id.code_text);
+
+            if (contents != null) {
+                placeholder.setText(contents);
+            } else {
+                placeholder.setText("Kein Code erkannt.");
+            }
+
+        }
     }
 
 

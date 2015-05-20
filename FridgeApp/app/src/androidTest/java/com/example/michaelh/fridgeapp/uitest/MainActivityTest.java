@@ -4,6 +4,7 @@ import android.test.ActivityInstrumentationTestCase2;
 import android.widget.TextView;
 
 import com.example.michaelh.fridgeapp.MainActivity;
+import com.example.michaelh.fridgeapp.R;
 import com.robotium.solo.Solo;
 import junit.framework.TestCase;
 
@@ -39,10 +40,10 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
        mySolo.clickOnButton("SCAN");
       // TextView text_view = mySolo.getText("Strichcode");
        mySolo.sleep(6000);
-       TextView text_view = mySolo.getText("Strichcode");
+       TextView text_view = (TextView) mySolo.getView(R.id.code_text);
        String text = text_view.getText().toString();
        //checkt ob text gesuchten Strichcode entspricht
-       assertEquals("90311789",text);
+       assertEquals("90097737",text);  // Vöslauer prickelnd, 0.5l
 
    }
 }
