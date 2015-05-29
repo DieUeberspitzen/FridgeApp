@@ -70,6 +70,8 @@ public class MainActivity extends ActionBarActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
 
+
+        /*
         if (result != null) {
             String contents = result.getContents();
             TextView placeholder = (TextView)findViewById(R.id.code_text);
@@ -81,6 +83,7 @@ public class MainActivity extends ActionBarActivity {
             }
 
         }
+            */
     }
 
 
