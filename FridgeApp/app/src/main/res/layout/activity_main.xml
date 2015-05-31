@@ -18,20 +18,27 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
+        android:weightSum="1"
         android:id="@+id/linearLayout">
 
         <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="SCAN"
-            android:id="@+id/scan_button"
-            android:layout_gravity="left" />
-
-        <Button
-            android:layout_width="match_parent"
+            android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:text="manuell hinzufügen"
+            android:layout_weight="0.5"
+            android:background="#b0b0b0"
+            android:layout_marginRight="3dip"
             android:id="@+id/add_product_manually" />
+
+        <Button
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:text="SCAN"
+            android:layout_weight="0.5"
+            android:background="#b0b0b0"
+            android:layout_marginLeft="3dip"
+            android:id="@+id/scan_button"/>
+
     </LinearLayout>
 
     <ListView
