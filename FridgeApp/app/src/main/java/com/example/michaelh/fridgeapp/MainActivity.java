@@ -6,7 +6,10 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 
@@ -30,6 +33,11 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
 
         Button scanButton = (Button)findViewById(R.id.scan_button);
+        String[] foods = {"Bacon", "Ham", "Potato", "Bacon", "Ham", "Potato", "Bacon", "Ham", "Potato", "Bacon", "Ham", "Potato", "Bacon", "Ham", "Potato", "Bacon", "Ham", "Potato", "Bacon", "Ham", "Potato"};
+
+        ListAdapter l_adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, foods);
+        ListView l_view = (ListView) findViewById(R.id.listView);
+        l_view.setAdapter(l_adapter);
 
         scanButton.setOnClickListener(new View.OnClickListener() {
             @Override
