@@ -63,7 +63,7 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
         //TextView text_view = (TextView) mySolo.getView(R.id.code_text);
         //String text = text_view.getText().toString();
 
-        ListView lv = (ListView)mySolo.getView(R.id.listView);
+        ListView lv = (ListView)mySolo.getView(R.id.listview);
         String selectedFromList = (String)(lv.getItemAtPosition(0));
         //checkt ob text gesuchten Strichcode entspricht
         assertEquals("9015160250289",selectedFromList);  // Almdudler, 0.5l

@@ -23,7 +23,7 @@
 
         <Button
             android:layout_width="0dip"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:text="manuell hinzufügen"
             android:layout_weight="0.5"
             android:background="#b0b0b0"
@@ -32,7 +32,7 @@
 
         <Button
             android:layout_width="0dip"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:text="SCAN"
             android:layout_weight="0.5"
             android:background="#b0b0b0"
@@ -41,12 +41,10 @@
 
     </LinearLayout>
 
-    <ListView
-        android:layout_alignParentTop="true"
+    <ListView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/listview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/listView"
-        android:layout_above="@+id/linearLayout"
-        android:layout_marginBottom="10dp" />
+        android:choiceMode="singleChoice" />
 
 </RelativeLayout>

@@ -1,14 +1,15 @@
 package com.example.michaelh.fridgeapp;
 
 
+import android.annotation.TargetApi;
+import android.os.Build;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
+import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -23,21 +24,29 @@ import android.widget.Button;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
+import java.util.ArrayList;
 
 
 public class MainActivity extends ActionBarActivity {
 
+    final ArrayList<String> list = new ArrayList<String>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button scanButton = (Button)findViewById(R.id.scan_button);
-        String[] foods = {"Bacon", "Ham", "Potato", "Bacon", "Ham", "Potato", "Bacon", "Ham", "Potato", "Bacon", "Ham", "Potato", "Bacon", "Ham", "Potato", "Bacon", "Ham", "Potato", "Bacon", "Ham", "Potato"};
+        final ListView listview = (ListView) findViewById(R.id.listview);
+       /* String[] values = new String[]{""};
 
-        ListAdapter l_adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, foods);
-        ListView l_view = (ListView) findViewById(R.id.listView);
-        l_view.setAdapter(l_adapter);
+
+        for (int i = 0; i < values.length; ++i) {
+            list.add(values[i]);
+        }*/
+        final StableArrayAdapter adapter = new StableArrayAdapter(this,
+                android.R.layout.simple_list_item_1, list);
+        listview.setAdapter(adapter);
+
+        Button scanButton = (Button)findViewById(R.id.scan_button);
 
         scanButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,21 +65,28 @@ public class MainActivity extends ActionBarActivity {
 
 
 
+        });
 
-            /*
-            public void onActivityResult(int requestCode, int resultCode, Intent intent) {
-                IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
-                if (scanResult != null) {
-                    String re = scanResult.getContents();
-                    Log.d("code", re);
+        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
-                    TextView placeholder = (TextView)findViewById(R.id.code_text);
-                    placeholder.setText("ulululul");
-                }
-                // else continue with any other code you need in the method
+            @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+            @Override
+            public void onItemClick(AdapterView<?> parent, final View view,
+                                    int position, long id) {
+                final String item = (String) parent.getItemAtPosition(position);
+                view.animate().setDuration(2000).alpha(0)
+                        .withEndAction(new Runnable() {
+                            @Override
+                            public void run() {
+                                list.remove(item);
+                                adapter.notifyDataSetChanged();
+                                view.setAlpha(1);
 
+                                listview.setAdapter(adapter);
+                            }
+                        });
             }
-            */
+
         });
     }
 
@@ -79,19 +95,20 @@ public class MainActivity extends ActionBarActivity {
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
 
 
-        /*
+
         if (result != null) {
             String contents = result.getContents();
-            TextView placeholder = (TextView)findViewById(R.id.code_text);
+            final ListView listview = (ListView) findViewById(R.id.listview);
 
             if (contents != null) {
-                placeholder.setText(contents);
-            } else {
-                placeholder.setText("Kein Code erkannt.");
+                list.add(contents);
+                final StableArrayAdapter adapter = new StableArrayAdapter(this,
+                        android.R.layout.simple_list_item_1, list);
+                listview.setAdapter(adapter);
             }
 
         }
-            */
+
     }
 
 
