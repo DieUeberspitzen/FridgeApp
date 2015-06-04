@@ -24,14 +24,27 @@ import android.widget.Button;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
+import java.io.DataInputStream;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 public class MainActivity extends ActionBarActivity {
 
+
     final ArrayList<String> list = new ArrayList<String>();
+
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -81,8 +94,6 @@ public class MainActivity extends ActionBarActivity {
                                 list.remove(item);
                                 adapter.notifyDataSetChanged();
                                 view.setAlpha(1);
-
-                                listview.setAdapter(adapter);
                             }
                         });
             }
@@ -133,4 +144,6 @@ public class MainActivity extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+
 }
