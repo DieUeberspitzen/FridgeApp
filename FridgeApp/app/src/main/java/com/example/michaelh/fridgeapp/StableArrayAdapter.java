@@ -10,11 +10,11 @@ import java.util.List;
 /**
  * Created by MichaelH on 02.06.2015.
  */
-public class StableArrayAdapter extends ArrayAdapter<String> {
-    HashMap<String, Integer> mIdMap = new HashMap<String, Integer>();
+public class StableArrayAdapter extends ArrayAdapter<Product> {
+    HashMap<Product, Integer> mIdMap = new HashMap<Product, Integer>();
 
     public StableArrayAdapter(Context context, int textViewResourceId,
-                              List<String> objects) {
+                              List<Product> objects) {
         super(context, textViewResourceId, objects);
         for (int i = 0; i < objects.size(); ++i) {
             mIdMap.put(objects.get(i), i);
@@ -23,7 +23,7 @@ public class StableArrayAdapter extends ArrayAdapter<String> {
 
     @Override
     public long getItemId(int position) {
-        String item = getItem(position);
+        Product item = getItem(position);
         return mIdMap.get(item);
     }
 
@@ -31,5 +31,7 @@ public class StableArrayAdapter extends ArrayAdapter<String> {
     public boolean hasStableIds() {
         return true;
     }
+
+
 
 }

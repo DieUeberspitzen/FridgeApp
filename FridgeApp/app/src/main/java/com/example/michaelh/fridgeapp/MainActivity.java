@@ -2,6 +2,7 @@ package com.example.michaelh.fridgeapp;
 
 
 import android.annotation.TargetApi;
+
 import android.os.Build;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -11,34 +12,29 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TextView;
 
-
-import android.app.Activity;
 import android.content.Intent;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
+
 
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
-import java.io.DataInputStream;
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLConnection;
+
 import java.util.ArrayList;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.HashMap;
+
+
+import static com.example.michaelh.fridgeapp.Constants.FIRST_COLUMN;
+import static com.example.michaelh.fridgeapp.Constants.SECOND_COLUMN;
 
 
 public class MainActivity extends ActionBarActivity {
 
 
-    final ArrayList<String> list = new ArrayList<String>();
-
+    //ArrayList<Product> list = new ArrayList<Product>();
+    private Product product;
+    private ArrayList<HashMap<String,String>> list;
+    private ArrayList<Product> products = new ArrayList<Product>();
 
 
 
@@ -48,16 +44,22 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        final ListView listview = (ListView) findViewById(R.id.listview);
+        ListView listview = (ListView) findViewById(R.id.listview);
        /* String[] values = new String[]{""};
 
 
         for (int i = 0; i < values.length; ++i) {
             list.add(values[i]);
         }*/
-        final StableArrayAdapter adapter = new StableArrayAdapter(this,
-                android.R.layout.simple_list_item_1, list);
+        product = new Product("test","1234");
+       products.add(product);
+       ProductToList(products);
+
+        //list.add(product);
+        //final StableArrayAdapter adapter = new StableArrayAdapter(this,android.R.layout.simple_list_item_1, list);
+        ListViewAdapter adapter = new ListViewAdapter(this,list);
         listview.setAdapter(adapter);
+
 
         Button scanButton = (Button)findViewById(R.id.scan_button);
 
@@ -86,7 +88,7 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, final View view,
                                     int position, long id) {
-                final String item = (String) parent.getItemAtPosition(position);
+               /* final String item = (String) parent.getItemAtPosition(position);
                 view.animate().setDuration(2000).alpha(0)
                         .withEndAction(new Runnable() {
                             @Override
@@ -95,10 +97,22 @@ public class MainActivity extends ActionBarActivity {
                                 adapter.notifyDataSetChanged();
                                 view.setAlpha(1);
                             }
-                        });
+                        });*/
             }
 
         });
+    }
+
+    public void ProductToList(ArrayList<Product> listproduct) {
+       list = new ArrayList<HashMap<String, String>>();
+
+        for(Product product: listproduct) {
+            HashMap<String, String> temp = new HashMap<String, String>();
+            temp.put(FIRST_COLUMN, product.getProductName());
+            temp.put(SECOND_COLUMN, product.getCode());
+
+            list.add(temp);
+        }
     }
 
 
@@ -112,10 +126,16 @@ public class MainActivity extends ActionBarActivity {
             final ListView listview = (ListView) findViewById(R.id.listview);
 
             if (contents != null) {
-                list.add(contents);
-                final StableArrayAdapter adapter = new StableArrayAdapter(this,
-                        android.R.layout.simple_list_item_1, list);
+                product = new Product("test",contents);
+                products.add(product);
+                ProductToList(products);
+                ListViewAdapter adapter = new ListViewAdapter(this,list);
+
+               // list.add(contents);
+                /*final StableArrayAdapter adapter = new StableArrayAdapter(this,
+                        android.R.layout.simple_list_item_1, list);*/
                 listview.setAdapter(adapter);
+
             }
 
         }
