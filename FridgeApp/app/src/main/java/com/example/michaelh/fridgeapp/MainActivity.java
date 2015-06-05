@@ -3,6 +3,7 @@ package com.example.michaelh.fridgeapp;
 
 import android.annotation.TargetApi;
 
+import android.app.Fragment;
 import android.os.Build;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -15,7 +16,7 @@ import android.widget.ListView;
 
 import android.content.Intent;
 
-
+import android.app.Fragment;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
@@ -28,13 +29,14 @@ import static com.example.michaelh.fridgeapp.Constants.FIRST_COLUMN;
 import static com.example.michaelh.fridgeapp.Constants.SECOND_COLUMN;
 
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends ActionBarActivity implements ProjectsListFragment.OnProjectInteractionListener {
 
 
     //ArrayList<Product> list = new ArrayList<Product>();
     private Product product;
     private ArrayList<HashMap<String,String>> list;
     private ArrayList<Product> products = new ArrayList<Product>();
+    ProjectDataSource dataSource;
 
 
 
@@ -43,6 +45,8 @@ public class MainActivity extends ActionBarActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //ProjectsListFragment.newInstance("a","b");
 
         ListView listview = (ListView) findViewById(R.id.listview);
        /* String[] values = new String[]{""};
@@ -116,6 +120,7 @@ public class MainActivity extends ActionBarActivity {
     }
 
 
+
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
 
@@ -143,6 +148,8 @@ public class MainActivity extends ActionBarActivity {
     }
 
 
+
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -166,4 +173,8 @@ public class MainActivity extends ActionBarActivity {
     }
 
 
+    @Override
+    public void onProjectInteraction(String id) {
+
+    }
 }

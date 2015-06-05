@@ -5,15 +5,24 @@ package com.example.michaelh.fridgeapp;
  */
 public class Product {
 
-    private int _id;
+    private long _id;
     private String _name;
     private String _code;
+    private String _image;
 
-    public Product() {
-
+    public String get_image() {
+        return _image;
     }
 
-    public Product(int id, String name, String code) {
+    public void set_image(String _image) {
+        this._image = _image;
+    }
+
+    public Product(String name) {
+     this._name = name;
+    }
+
+    public Product(long id, String name, String code) {
         this._id = id;
         this._name = name;
         this._code = code;
@@ -24,11 +33,11 @@ public class Product {
         this._code = code;
     }
 
-    public void setID(int id) {
+    public void setID(long id) {
         this._id = id;
     }
 
-    public int getID() {
+    public long getID() {
         return this._id;
     }
 
