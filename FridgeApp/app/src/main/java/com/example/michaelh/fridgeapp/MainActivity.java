@@ -21,6 +21,7 @@ import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -29,7 +30,7 @@ import static com.example.michaelh.fridgeapp.Constants.FIRST_COLUMN;
 import static com.example.michaelh.fridgeapp.Constants.SECOND_COLUMN;
 
 
-public class MainActivity extends ActionBarActivity implements ProjectsListFragment.OnProjectInteractionListener {
+public class MainActivity extends ActionBarActivity  {
 
 
     //ArrayList<Product> list = new ArrayList<Product>();
@@ -55,12 +56,20 @@ public class MainActivity extends ActionBarActivity implements ProjectsListFragm
         for (int i = 0; i < values.length; ++i) {
             list.add(values[i]);
         }*/
-        product = new Product("test","1234");
+       /* product = new Product("test","1234");
        products.add(product);
-       ProductToList(products);
+       ProductToList(products);*/
 
         //list.add(product);
         //final StableArrayAdapter adapter = new StableArrayAdapter(this,android.R.layout.simple_list_item_1, list);
+        dataSource = new ProjectDataSource(this);
+        try {
+            dataSource.open();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        ProductToList(dataSource.getProducts());
         ListViewAdapter adapter = new ListViewAdapter(this,list);
         listview.setAdapter(adapter);
 
@@ -173,8 +182,5 @@ public class MainActivity extends ActionBarActivity implements ProjectsListFragm
     }
 
 
-    @Override
-    public void onProjectInteraction(String id) {
 
-    }
 }

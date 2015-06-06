@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -63,8 +64,18 @@ public class ProjectDataSource {
         return product;
     }
 
-    public List<Product> getProducts() {
-      return null;
+    public ArrayList<Product> getProducts() {
+       ArrayList<Product> listproduct = new ArrayList<Product>();
+        Cursor cursor = database.query(DbHelper.TABLE_FRIDGE, columns, null,null,null,null,null);
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()){
+            Product prod = populateProject(cursor);
+            listproduct.add(prod);
+            cursor.moveToNext();
+        }
+        cursor.close();
+        return listproduct;
+
     }
 
 
