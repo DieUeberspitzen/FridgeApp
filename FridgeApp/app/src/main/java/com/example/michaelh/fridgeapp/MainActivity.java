@@ -55,12 +55,9 @@ public class MainActivity extends ActionBarActivity implements ProjectsListFragm
         for (int i = 0; i < values.length; ++i) {
             list.add(values[i]);
         }*/
-
-
-        //generate dummy product
-        product = new Product("Product #1","<some_bar_code>");
-        products.add(product);
-        ProductToList(products);
+        product = new Product("test","1234");
+       products.add(product);
+       ProductToList(products);
 
         //list.add(product);
         //final StableArrayAdapter adapter = new StableArrayAdapter(this,android.R.layout.simple_list_item_1, list);
@@ -134,7 +131,7 @@ public class MainActivity extends ActionBarActivity implements ProjectsListFragm
             final ListView listview = (ListView) findViewById(R.id.listview);
 
             if (contents != null) {
-                product = new Product("Product #" + Integer.toString(products.size() + 1),contents);
+                product = new Product("test",contents);
                 products.add(product);
                 ProductToList(products);
                 ListViewAdapter adapter = new ListViewAdapter(this,list);
