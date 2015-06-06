@@ -20,7 +20,7 @@ public class DbHelper extends SQLiteOpenHelper {
 
     public static final String SQL_CREATE =
             "CREATE Table " + TABLE_FRIDGE + "(" +
-                    COLUMN_ID + " integer primary key autoincrement, " +
+                    COLUMN_ID + " INTEGER PRIMARY KEY autoincrement, " +
                     COLUMN_NAME + " text not null, " +
                     COLUMN_CODE + " text not null, " +
                     COLUMN_Image + " text);";

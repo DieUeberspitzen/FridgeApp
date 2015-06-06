@@ -36,12 +36,11 @@ public class ProjectDataSource {
         dbHelper.close();
     }
 
-    public Product createProduct(String name,String code) {
+    public Product createProduct(String name) {
         ContentValues values = new ContentValues();
         values.put(DbHelper.COLUMN_NAME, name);
-        values.put(DbHelper.COLUMN_CODE, code);
         long insertId = database.insert(DbHelper.TABLE_FRIDGE,null,values);
-        System.out.println(insertId);
+
         Cursor cursor = database.query(DbHelper.TABLE_FRIDGE, columns,
                 dbHelper.COLUMN_ID + "=" + insertId, null, null,null,null);
 

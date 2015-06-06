@@ -140,10 +140,9 @@ public class MainActivity extends ActionBarActivity  {
             final ListView listview = (ListView) findViewById(R.id.listview);
 
             if (contents != null) {
-                Product prod = dataSource.createProduct("test_db",contents);
-                //prod.setCode(contents);
-                //products.add(product);
-                ProductToList(dataSource.getProducts());
+                product = new Product("test",contents);
+                products.add(product);
+                ProductToList(products);
                 ListViewAdapter adapter = new ListViewAdapter(this,list);
 
                // list.add(contents);
