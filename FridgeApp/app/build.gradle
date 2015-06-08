@@ -29,13 +29,12 @@ repositories {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:appcompat-v7:22.0.0'
-
     compile 'com.journeyapps:zxing-android-embedded:2.3.0@aar'
     compile 'com.journeyapps:zxing-android-legacy:2.3.0@aar'
     compile 'com.journeyapps:zxing-android-integration:2.3.0@aar'
     compile 'com.google.zxing:core:3.2.0'
-
     androidTestCompile 'com.jayway.android.robotium:robotium-solo:5.3.1'
+    compile files('libs/jsoup-1.8.2.jar')
 }

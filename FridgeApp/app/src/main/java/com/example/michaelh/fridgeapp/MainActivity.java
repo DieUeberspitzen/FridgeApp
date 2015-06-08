@@ -3,7 +3,7 @@ package com.example.michaelh.fridgeapp;
 
 import android.annotation.TargetApi;
 
-import android.app.Fragment;
+import android.app.ProgressDialog;
 import android.os.Build;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -16,9 +16,19 @@ import android.widget.ListView;
 
 import android.content.Intent;
 
-import android.app.Fragment;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
+
+
+
+import java.io.IOException;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.select.Elements;
+
+import android.os.AsyncTask;
+import android.widget.TextView;
 
 
 import java.sql.SQLException;
@@ -39,6 +49,11 @@ public class MainActivity extends ActionBarActivity  {
     private ArrayList<Product> products = new ArrayList<Product>();
     ProjectDataSource dataSource;
 
+
+    String url = "http://www.google.com/search?ie=UTF-8&oe=UTF-8&sourceid=navclient&gfns=1&q=";
+    ProgressDialog mProgressDialog;
+    String barcode = "";
+    String title_for_list = "";
 
 
     @Override
@@ -136,11 +151,28 @@ public class MainActivity extends ActionBarActivity  {
 
 
         if (result != null) {
+
+
             String contents = result.getContents();
+            barcode = contents;
+
+            new Title().execute();
+
+
+            /*
+            try {
+                Document document = Jsoup.connect(url).get();
+                Elements headline_one = document.select("h1");
+                title = headline_one.html();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            */
+
             final ListView listview = (ListView) findViewById(R.id.listview);
 
             if (contents != null) {
-                Product prod = dataSource.createProduct("test_db",contents);
+                Product prod = dataSource.createProduct(title_for_list,contents);
                 //prod.setCode(contents);
                 //products.add(product);
                 ProductToList(dataSource.getProducts());
@@ -154,6 +186,53 @@ public class MainActivity extends ActionBarActivity  {
             }
 
         }
+
+    }
+
+
+
+
+
+    // Title AsyncTask
+    private class Title extends AsyncTask<Void, Void, Void> {
+        String title;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            mProgressDialog = new ProgressDialog(MainActivity.this);
+            mProgressDialog.setTitle("Android Basic JSoup Tutorial");
+            mProgressDialog.setMessage("Loading...");
+            mProgressDialog.setIndeterminate(false);
+            mProgressDialog.show();
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            try {
+                // Connect to the web site
+                Document document = Jsoup.connect(url+barcode).get();
+                // Get the html document title
+                Elements headline_one = document.select("h1");
+                title = headline_one.html();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+
+
+
+        //@Override
+        protected void onPostExecute(Void result) {
+            // Set title into TextView
+            TextView txttitle = (TextView) findViewById(R.id.titletxt);
+            txttitle.setText(title);
+            title_for_list = title;
+            mProgressDialog.dismiss();
+        }
+
 
     }
 
