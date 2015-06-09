@@ -33,6 +33,7 @@ import android.widget.TextView;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 
@@ -50,6 +51,10 @@ public class MainActivity extends ActionBarActivity  {
     String url = "http://www.google.com/search?ie=UTF-8&oe=UTF-8&sourceid=navclient&gfns=1&q=";
     String barcode = "";
     String title_for_list = "";
+    String description_for_list = "";
+    String image_for_list = "";
+    String url_for_list = "";
+    Date expiry_date = new Date();
 
     //ProgressDialog mProgressDialog;
 
@@ -209,11 +214,23 @@ public class MainActivity extends ActionBarActivity  {
         @Override
         protected Void doInBackground(Void  ... params) {
             try {
+                url_for_list = url + barcode;
+
                 // Connect to the web site
-                Document document = Jsoup.connect(url + barcode).get();
+                Document document = Jsoup.connect(url_for_list).get();
                 // Get the html document title
                 Elements headline_one = document.select("h1");
+                Elements description = document.select("h3[class=page-title-subline]");
+                Elements image = document.select("meta[property=og:image]");
+
+                // get url of title
                 title_for_list = headline_one.html();
+
+                // get url of description
+                description_for_list = description.html();
+
+                // get url of image
+                image_for_list = image.attr("content");
 
                 finished_get_data = true;
 
