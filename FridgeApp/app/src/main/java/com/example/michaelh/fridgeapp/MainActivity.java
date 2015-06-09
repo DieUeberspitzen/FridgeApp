@@ -48,13 +48,16 @@ public class MainActivity extends ActionBarActivity  {
     ProjectDataSource dataSource;
 
 
-    String url = "http://www.google.com/search?ie=UTF-8&oe=UTF-8&sourceid=navclient&gfns=1&q=";
+    final String url = "http://www.google.com/search?ie=UTF-8&oe=UTF-8&sourceid=navclient&gfns=1&q=";
+
     String barcode = "";
+
+
     String title_for_list = "";
     String description_for_list = "";
     String image_for_list = "";
     String url_for_list = "";
-    Date expiry_date = new Date();
+    String expiry_date = "";
 
     //ProgressDialog mProgressDialog;
 
@@ -125,8 +128,9 @@ public class MainActivity extends ActionBarActivity  {
 
         for(Product product: listproduct) {
             HashMap<String, String> temp = new HashMap<String, String>();
-            temp.put(FIRST_COLUMN, product.getProductName());
-            temp.put(SECOND_COLUMN, product.getCode());
+            temp.put(FIRST_COLUMN, product.getTitle());
+            temp.put(SECOND_COLUMN, product.getDescription());
+
 
             list.add(temp);
         }
@@ -156,7 +160,7 @@ public class MainActivity extends ActionBarActivity  {
                     title_for_list = "<find nix..sry>";
                 }
 
-                Product prod = dataSource.createProduct(title_for_list,contents);
+                Product prod = dataSource.createProduct(title_for_list,description_for_list, image_for_list, url_for_list, expiry_date);
 
                 finished_get_data = false;
 

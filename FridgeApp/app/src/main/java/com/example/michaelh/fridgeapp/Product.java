@@ -1,36 +1,41 @@
 package com.example.michaelh.fridgeapp;
 
+import java.util.Date;
+
+
 /**
  * Created by MichaelH on 04.06.2015.
  */
 public class Product {
 
     private long _id;
-    private String _name;
-    private String _code;
+    private String _title;
+    private String _description;
     private String _image;
+    private String _url;
+    private String _expiry;
 
-    public String get_image() {
-        return _image;
+
+
+
+
+
+    public Product(String title) {
+     this._title = title;
     }
 
-    public void set_image(String _image) {
-        this._image = _image;
-    }
-
-    public Product(String name) {
-     this._name = name;
-    }
-
-    public Product(long id, String name, String code) {
+    public Product(long id, String title, String description, String image, String url, String expiry) {
         this._id = id;
-        this._name = name;
-        this._code = code;
+        this._title = title;
+        this._description = description;
+        this._image = image;
+        this._url = url;
+        this._expiry = expiry;
     }
 
-    public Product(String name, String code) {
-        this._name = name;
-        this._code = code;
+    public Product(String title, String description) {
+        this._title = title;
+        this._description = description;
     }
 
     public void setID(long id) {
@@ -41,19 +46,36 @@ public class Product {
         return this._id;
     }
 
-    public void setName(String name) {
-        this._name = name;
+    public void setTitle(String title) {
+        this._title = title;
     }
 
-    public String getProductName() {
-        return this._name;
+    public String getTitle() {
+        return this._title;
     }
 
-    public void setCode(String code) {
-        this._code = code;
+    public void setDescription(String description) {
+        this._description = description;
     }
 
-    public String getCode() {
-        return this._code;
+    public String getDescription() {
+        return this._description;
     }
+
+    public String get_image() {
+        return _image;
+    }
+
+    public void set_image(String _image) {
+        this._image = _image;
+    }
+
+    public String get_url() { return _url;  }
+
+    public void set_url(String _url) { this._url = _url; }
+
+    public String get_expiry() { return _expiry; }
+
+    public void set_expiry(String _expiry) { this._expiry = _expiry; }
 }
+

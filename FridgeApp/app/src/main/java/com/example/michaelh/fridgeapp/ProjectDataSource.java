@@ -45,7 +45,7 @@ public class ProjectDataSource {
         values.put(DbHelper.COLUMN_DESECRTIPTION, description);
         values.put(DbHelper.COLUMN_Image, image);
         values.put(DbHelper.COLUMN_URL, url);
-        values.put(DbHelper.COLUMN_DESECRTIPTION, date);
+        values.put(DbHelper.COLUMN_DATE, date);
         long insertId = database.insert(DbHelper.TABLE_FRIDGE,null,values);
         //System.out.println(insertId);
         Cursor cursor = database.query(DbHelper.TABLE_FRIDGE, columns,

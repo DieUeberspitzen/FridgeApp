@@ -18,7 +18,7 @@ public class DbHelper extends SQLiteOpenHelper {
     public static final String COLUMN_DESECRTIPTION = "description";
     public static final String COLUMN_Image = "image";
     public static final String COLUMN_URL = "url";
-    public static final String COLUMN_DATE = "ablaufdatum";
+    public static final String COLUMN_DATE = "expiry";
 
     public static final String SQL_CREATE =
             "CREATE Table " + TABLE_FRIDGE + "(" +
