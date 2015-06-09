@@ -50,13 +50,4 @@
         android:layout_alignParentTop="true"
         android:layout_above="@+id/linearLayout" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="New Text"
-        android:id="@+id/titletxt"
-        android:layout_alignBottom="@+id/listview"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
-
 </RelativeLayout>

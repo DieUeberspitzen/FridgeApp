@@ -41,9 +41,6 @@ import static com.example.michaelh.fridgeapp.Constants.SECOND_COLUMN;
 
 
 public class MainActivity extends ActionBarActivity  {
-
-
-    //ArrayList<Product> list = new ArrayList<Product>();
     private Product product;
     private ArrayList<HashMap<String,String>> list;
     private ArrayList<Product> products = new ArrayList<Product>();
@@ -51,9 +48,12 @@ public class MainActivity extends ActionBarActivity  {
 
 
     String url = "http://www.google.com/search?ie=UTF-8&oe=UTF-8&sourceid=navclient&gfns=1&q=";
-    ProgressDialog mProgressDialog;
     String barcode = "";
     String title_for_list = "";
+
+    //ProgressDialog mProgressDialog;
+
+    boolean finished_get_data = false;
 
 
     @Override
@@ -62,21 +62,8 @@ public class MainActivity extends ActionBarActivity  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //ProjectsListFragment.newInstance("a","b");
-
         ListView listview = (ListView) findViewById(R.id.listview);
-       /* String[] values = new String[]{""};
 
-
-        for (int i = 0; i < values.length; ++i) {
-            list.add(values[i]);
-        }*/
-       /* product = new Product("test","1234");
-       products.add(product);
-       ProductToList(products);*/
-
-        //list.add(product);
-        //final StableArrayAdapter adapter = new StableArrayAdapter(this,android.R.layout.simple_list_item_1, list);
         dataSource = new ProjectDataSource(this);
         try {
             dataSource.open();
@@ -101,9 +88,6 @@ public class MainActivity extends ActionBarActivity  {
                 //customize the prompt message before scanning
                 integrator.addExtra("PROMPT_MESSAGE", "Scannen Sie das gewünschte Produkt!");
                 integrator.initiateScan(IntentIntegrator.PRODUCT_CODE_TYPES);
-
-                //TextView placeholder = (TextView)findViewById(R.id.code_text);
-                //placeholder.setText("ulululul");
             }
 
 
@@ -112,7 +96,7 @@ public class MainActivity extends ActionBarActivity  {
 
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
-            @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+            //@TargetApi(Build.VERSION_CODES.JELLY_BEAN)
             @Override
             public void onItemClick(AdapterView<?> parent, final View view,
                                     int position, long id) {
@@ -148,94 +132,36 @@ public class MainActivity extends ActionBarActivity  {
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
 
-
-
         if (result != null) {
-
 
             String contents = result.getContents();
             barcode = contents;
 
-            new Title().execute();
+            new GetDataOnline().execute();
 
-
-            /*
-            try {
-                Document document = Jsoup.connect(url).get();
-                Elements headline_one = document.select("h1");
-                title = headline_one.html();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            */
 
             final ListView listview = (ListView) findViewById(R.id.listview);
 
             if (contents != null) {
+
+                while(!finished_get_data) {}
+
+                if(title_for_list.startsWith("<") || title_for_list == null)
+                {
+                    title_for_list = "<find nix..sry>";
+                }
+
                 Product prod = dataSource.createProduct(title_for_list,contents);
-                //prod.setCode(contents);
-                //products.add(product);
+
+                finished_get_data = false;
+
                 ProductToList(dataSource.getProducts());
                 ListViewAdapter adapter = new ListViewAdapter(this,list);
 
-               // list.add(contents);
-                /*final StableArrayAdapter adapter = new StableArrayAdapter(this,
-                        android.R.layout.simple_list_item_1, list);*/
                 listview.setAdapter(adapter);
-
             }
-
         }
-
     }
-
-
-
-
-
-    // Title AsyncTask
-    private class Title extends AsyncTask<Void, Void, Void> {
-        String title;
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            mProgressDialog = new ProgressDialog(MainActivity.this);
-            mProgressDialog.setTitle("Android Basic JSoup Tutorial");
-            mProgressDialog.setMessage("Loading...");
-            mProgressDialog.setIndeterminate(false);
-            mProgressDialog.show();
-        }
-
-        @Override
-        protected Void doInBackground(Void... params) {
-            try {
-                // Connect to the web site
-                Document document = Jsoup.connect(url+barcode).get();
-                // Get the html document title
-                Elements headline_one = document.select("h1");
-                title = headline_one.html();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-
-
-
-
-        //@Override
-        protected void onPostExecute(Void result) {
-            // Set title into TextView
-            TextView txttitle = (TextView) findViewById(R.id.titletxt);
-            txttitle.setText(title);
-            title_for_list = title;
-            mProgressDialog.dismiss();
-        }
-
-
-    }
-
 
 
 
@@ -261,6 +187,50 @@ public class MainActivity extends ActionBarActivity  {
         return super.onOptionsItemSelected(item);
     }
 
+
+
+
+    // Title AsyncTask
+    public class GetDataOnline extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            /*
+            mProgressDialog = new ProgressDialog(MainActivity.this);
+            mProgressDialog.setTitle("Produktinformationen");
+            mProgressDialog.setMessage("...hob's glei...");
+            mProgressDialog.setIndeterminate(false);
+            mProgressDialog.show();
+            */
+        }
+
+
+        @Override
+        protected Void doInBackground(Void  ... params) {
+            try {
+                // Connect to the web site
+                Document document = Jsoup.connect(url + barcode).get();
+                // Get the html document title
+                Elements headline_one = document.select("h1");
+                title_for_list = headline_one.html();
+
+                finished_get_data = true;
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            return null;
+        }
+
+
+        @Override
+        protected void onPostExecute(Void result) {
+            //mProgressDialog.dismiss();
+        }
+
+    }
 
 
 }
