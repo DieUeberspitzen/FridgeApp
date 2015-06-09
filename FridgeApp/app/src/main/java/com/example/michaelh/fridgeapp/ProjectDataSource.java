@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Date;
 
 /**
  * Created by MichaelH on 05.06.2015.
@@ -20,8 +21,10 @@ public class ProjectDataSource {
     private String[] columns = {
             DbHelper.COLUMN_ID,
             DbHelper.COLUMN_NAME,
-            DbHelper.COLUMN_CODE,
-            DbHelper.COLUMN_Image
+            DbHelper.COLUMN_DESECRTIPTION,
+            DbHelper.COLUMN_Image,
+            DbHelper.COLUMN_URL,
+            DbHelper.COLUMN_DATE
     };
 
     public ProjectDataSource(Context context){
@@ -36,12 +39,15 @@ public class ProjectDataSource {
         dbHelper.close();
     }
 
-    public Product createProduct(String name,String code) {
+    public Product createProduct(String name,String description, String image, String url, String date) {
         ContentValues values = new ContentValues();
         values.put(DbHelper.COLUMN_NAME, name);
-        values.put(DbHelper.COLUMN_CODE, code);
+        values.put(DbHelper.COLUMN_DESECRTIPTION, description);
+        values.put(DbHelper.COLUMN_Image, image);
+        values.put(DbHelper.COLUMN_URL, url);
+        values.put(DbHelper.COLUMN_DESECRTIPTION, date);
         long insertId = database.insert(DbHelper.TABLE_FRIDGE,null,values);
-        System.out.println(insertId);
+        //System.out.println(insertId);
         Cursor cursor = database.query(DbHelper.TABLE_FRIDGE, columns,
                 dbHelper.COLUMN_ID + "=" + insertId, null, null,null,null);
 
@@ -55,12 +61,18 @@ public class ProjectDataSource {
     public Product populateProject(Cursor cursor) {
        int idIndex = cursor.getColumnIndex(DbHelper.COLUMN_ID);
        int titleIndex = cursor.getColumnIndex(DbHelper.COLUMN_NAME);
-        int codeIndex = cursor.getColumnIndex(DbHelper.COLUMN_CODE);
-        //int imageIndex = cursor.getColumnIndex(DbHelper.COLUMN_Image);
+        int descrIndex = cursor.getColumnIndex(DbHelper.COLUMN_DESECRTIPTION);
+        int imageIndex = cursor.getColumnIndex(DbHelper.COLUMN_Image);
+        int urlIndex = cursor.getColumnIndex(DbHelper.COLUMN_URL);
+        int dateIndex = cursor.getColumnIndex(DbHelper.COLUMN_DATE);
 
         Product product = new Product(cursor.getString(titleIndex));
         product.setID(cursor.getLong(idIndex));
-        product.setCode(cursor.getString(codeIndex));
+        product.setDescription(cursor.getString(descrIndex));
+        product.set_image(cursor.getString(imageIndex));
+        product.set_url(cursor.getString(urlIndex));
+        product.set_expiry(cursor.getString(dateIndex));
+
 
         return product;
     }
