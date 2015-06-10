@@ -51,7 +51,8 @@ public class MainActivity extends ActionBarActivity  {
     ProjectDataSource dataSource;
 
 
-    final String url = "http://www.google.com/search?ie=UTF-8&oe=UTF-8&sourceid=navclient&gfns=1&q=";
+    final String url_start = "http://www.codecheck.info/product.search?q=";
+    final String url_end = "&OK=Suchen";
 
     String barcode = "";
 
@@ -158,7 +159,7 @@ public class MainActivity extends ActionBarActivity  {
 
         if (barcode != null) {
 
-            if(title_for_list.startsWith("<") || title_for_list == null)
+            if(title_for_list.startsWith("Es wurde kein Produkt") || title_for_list == null)
             {
 
                 Context context = getApplicationContext();
@@ -217,7 +218,7 @@ public class MainActivity extends ActionBarActivity  {
 
             mProgressDialog = new ProgressDialog(MainActivity.this);
             mProgressDialog.setTitle("Produktinformationen");
-            mProgressDialog.setMessage("...hob's glei... =)");
+            mProgressDialog.setMessage("...schau ma mol... =)");
             mProgressDialog.setIndeterminate(false);
             mProgressDialog.show();
 
@@ -227,17 +228,17 @@ public class MainActivity extends ActionBarActivity  {
         @Override
         protected Void doInBackground(Void  ... params) {
             try {
-                url_for_list = url + barcode;
+                url_for_list = url_start + barcode + url_end;
 
                 // Connect to the web site
                 Document document = Jsoup.connect(url_for_list).get();
                 // Get the html document title
-                Elements headline_one = document.select("h1");
+                Elements title = document.select("h1");
                 Elements description = document.select("h3[class=page-title-subline]");
                 Elements image = document.select("meta[property=og:image]");
 
                 // get url of title
-                title_for_list = headline_one.html();
+                title_for_list = title.html();
 
                 // get url of description
                 description_for_list = description.html();
