@@ -49,7 +49,7 @@ public class ProjectDataSource {
         long insertId = database.insert(DbHelper.TABLE_FRIDGE,null,values);
         //System.out.println(insertId);
         Cursor cursor = database.query(DbHelper.TABLE_FRIDGE, columns,
-                dbHelper.COLUMN_ID + "=" + insertId, null, null,null,null);
+               dbHelper.COLUMN_ID + "=" + insertId, null, null,null,null);
 
         cursor.moveToFirst();
         Product product;
@@ -75,6 +75,16 @@ public class ProjectDataSource {
 
 
         return product;
+    }
+
+    public Product getProduct(String titel)
+    {
+        Cursor cursor = database.query(DbHelper.TABLE_FRIDGE, columns, null,null,null,null,null);
+       // Cursor cursor = database.query(DbHelper.TABLE_FRIDGE, columns, dbHelper.COLUMN_NAME  + "=" + titel,null,null,null,null);
+        cursor.moveToFirst();
+        Product prod = populateProject(cursor);
+        cursor.close();
+        return prod;
     }
 
     public ArrayList<Product> getProducts() {

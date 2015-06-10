@@ -56,7 +56,7 @@ public class MainActivity extends ActionBarActivity  {
 
     String barcode = "";
 
-
+    String titel = "";
     String title_for_list = "";
     String description_for_list = "";
     String image_for_list = "";
@@ -64,14 +64,14 @@ public class MainActivity extends ActionBarActivity  {
     String expiry_date = "";
 
     ProgressDialog mProgressDialog;
-
+    static MainActivity ma;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+       ma = this;
         ListView listview = (ListView) findViewById(R.id.listview);
 
         dataSource = new ProjectDataSource(this);
@@ -111,7 +111,16 @@ public class MainActivity extends ActionBarActivity  {
                                     long id) {
 
                 Intent i = new Intent();
+                HashMap<String, String> temp = (HashMap<String, String>)parent.getItemAtPosition(position);
+                titel = temp.get(FIRST_COLUMN);
+                //System.out.print("ersd" + titel + "\n");
                 i.setClass(MainActivity.this, ProductActivity.class);
+                i.putExtra("titel", titel);
+                Product prod = dataSource.getProduct(titel);
+                i.putExtra("url", prod.get_url());
+                i.putExtra("expiry", prod.get_expiry());
+                i.putExtra("image", prod.get_url());
+                i.putExtra("description", prod.getDescription());
 
                 startActivity(i);
 
@@ -225,7 +234,15 @@ public class MainActivity extends ActionBarActivity  {
         return super.onOptionsItemSelected(item);
     }
 
+   public void setTitel(String titel_loc)
+   {
+       titel  = titel_loc;
+   }
 
+    public String getTitel()
+    {
+        return titel;
+    }
 
 
     // Title AsyncTask
