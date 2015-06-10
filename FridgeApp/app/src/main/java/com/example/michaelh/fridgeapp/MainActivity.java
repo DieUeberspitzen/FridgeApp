@@ -104,13 +104,29 @@ public class MainActivity extends ActionBarActivity  {
 
         });
 
+
+        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position,
+                                    long id) {
+
+                Intent i = new Intent();
+                i.setClass(MainActivity.this, ProductActivity.class);
+
+                startActivity(i);
+
+            }
+        });
+
+
+        /*
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             //@TargetApi(Build.VERSION_CODES.JELLY_BEAN)
             @Override
             public void onItemClick(AdapterView<?> parent, final View view,
                                     int position, long id) {
-               /* final String item = (String) parent.getItemAtPosition(position);
+                final String item = (String) parent.getItemAtPosition(position);
                 view.animate().setDuration(2000).alpha(0)
                         .withEndAction(new Runnable() {
                             @Override
@@ -119,10 +135,13 @@ public class MainActivity extends ActionBarActivity  {
                                 adapter.notifyDataSetChanged();
                                 view.setAlpha(1);
                             }
-                        });*/
+                        });
             }
 
         });
+        */
+
+
     }
 
     public void ProductToList(ArrayList<Product> listproduct) {
@@ -232,22 +251,16 @@ public class MainActivity extends ActionBarActivity  {
 
                 // Connect to the web site
                 Document document = Jsoup.connect(url_for_list).get();
-                // Get the html document title
+                // Get the html document elements
                 Elements title = document.select("h1");
                 Elements description = document.select("h3[class=page-title-subline]");
                 Elements image = document.select("meta[property=og:image]");
                 Elements url = document.select("meta[property=og:url]");
 
-                // get url of title
+                // get urls
                 title_for_list = title.html();
-
-                // get url of description
                 description_for_list = description.html();
-
-                // get url of image
                 image_for_list = image.attr("content");
-
-                // get url of product
                 url_for_list = url.attr("content");
 
 

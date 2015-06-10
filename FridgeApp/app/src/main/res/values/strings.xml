@@ -6,4 +6,5 @@
     <string name="product_listing_name">Ihr Kühlschrank enthält:</string>
     <string name="expiry_date_text">Ablaufdatum:</string>
     <string name="placeholder_code">Platzhalter für Code</string>
+    <string name="title_activity_product">ProductActivity</string>
 </resources>
