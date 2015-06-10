@@ -236,6 +236,7 @@ public class MainActivity extends ActionBarActivity  {
                 Elements title = document.select("h1");
                 Elements description = document.select("h3[class=page-title-subline]");
                 Elements image = document.select("meta[property=og:image]");
+                Elements url = document.select("meta[property=og:url]");
 
                 // get url of title
                 title_for_list = title.html();
@@ -245,6 +246,9 @@ public class MainActivity extends ActionBarActivity  {
 
                 // get url of image
                 image_for_list = image.attr("content");
+
+                // get url of product
+                url_for_list = url.attr("content");
 
 
             } catch (IOException e) {
