@@ -4,6 +4,7 @@ package com.example.michaelh.fridgeapp;
 import android.annotation.TargetApi;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.Build;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -29,12 +30,14 @@ import org.jsoup.select.Elements;
 
 import android.os.AsyncTask;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.concurrent.ExecutionException;
 
 
 import static com.example.michaelh.fridgeapp.Constants.FIRST_COLUMN;
@@ -59,9 +62,7 @@ public class MainActivity extends ActionBarActivity  {
     String url_for_list = "";
     String expiry_date = "";
 
-    //ProgressDialog mProgressDialog;
-
-    boolean finished_get_data = false;
+    ProgressDialog mProgressDialog;
 
 
     @Override
@@ -148,30 +149,38 @@ public class MainActivity extends ActionBarActivity  {
 
             new GetDataOnline().execute();
 
+        }
+    }
 
-            final ListView listview = (ListView) findViewById(R.id.listview);
 
-            if (contents != null) {
+    public void WriteList(){
+        final ListView listview = (ListView) findViewById(R.id.listview);
 
-                while(!finished_get_data) {}
+        if (barcode != null) {
 
-                if(title_for_list.startsWith("<") || title_for_list == null)
-                {
-                    title_for_list = "<find nix..sry>";
-                }
+            if(title_for_list.startsWith("<") || title_for_list == null)
+            {
 
-                Product prod = dataSource.createProduct(title_for_list,description_for_list, image_for_list, url_for_list, expiry_date);
+                Context context = getApplicationContext();
+                CharSequence text = "...find leider nix... =(";
+                int duration = Toast.LENGTH_SHORT;
 
-                finished_get_data = false;
+                Toast toast = Toast.makeText(context, text, duration);
+                toast.show();
+
+
+                //title_for_list = "<find nix..sry>";
+            }
+            else {
+                Product prod = dataSource.createProduct(title_for_list, description_for_list, image_for_list, url_for_list, expiry_date);
 
                 ProductToList(dataSource.getProducts());
-                ListViewAdapter adapter = new ListViewAdapter(this,list);
+                ListViewAdapter adapter = new ListViewAdapter(this, list);
 
                 listview.setAdapter(adapter);
             }
         }
     }
-
 
 
     @Override
@@ -205,14 +214,14 @@ public class MainActivity extends ActionBarActivity  {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            /*
+
             mProgressDialog = new ProgressDialog(MainActivity.this);
             mProgressDialog.setTitle("Produktinformationen");
-            mProgressDialog.setMessage("...hob's glei...");
+            mProgressDialog.setMessage("...hob's glei... =)");
             mProgressDialog.setIndeterminate(false);
             mProgressDialog.show();
-            */
-        }
+
+            }
 
 
         @Override
@@ -236,7 +245,6 @@ public class MainActivity extends ActionBarActivity  {
                 // get url of image
                 image_for_list = image.attr("content");
 
-                finished_get_data = true;
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -248,7 +256,9 @@ public class MainActivity extends ActionBarActivity  {
 
         @Override
         protected void onPostExecute(Void result) {
-            //mProgressDialog.dismiss();
+            mProgressDialog.dismiss();
+
+            WriteList();
         }
 
     }
