@@ -24,7 +24,9 @@
         <activity
             android:name=".ProductActivity"
             android:label="@string/title_activity_product"
-            android:parentActivityName=".MainActivity" >
+            android:screenOrientation="portrait" 
+
+        android:parentActivityName=".MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.michaelh.fridgeapp.MainActivity" />

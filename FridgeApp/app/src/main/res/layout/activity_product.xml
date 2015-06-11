@@ -107,7 +107,7 @@
                 android:layout_weight="0.5"
                 android:weightSum="1"
                 android:layout_marginRight="5dip"
-                android:layout_marginTop="5dip"
+                android:layout_marginTop="10dip"
                 android:layout_height="match_parent">
 
                 <TextView
@@ -143,7 +143,7 @@
                 android:layout_width="0dip"
                 android:layout_weight="0.5"
                 android:weightSum="1"
-                android:layout_marginTop="5dip"
+                android:layout_marginTop="10dip"
                 android:layout_marginLeft="5dip"
                 android:layout_height="match_parent">
 
@@ -152,6 +152,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dip"
                     android:layout_weight="0.35"
+                    android:gravity="center_horizontal"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="Ablaufdatum"
                     android:id="@+id/tbExpDate" />
@@ -160,6 +161,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dip"
                     android:layout_weight="0.35"
+                    android:gravity="center_horizontal"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="Tage zum Ablauf"
                     android:id="@+id/tbDaysToGo" />
@@ -168,11 +170,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dip"
                     android:layout_weight="0.3"
+                    android:gravity="center_horizontal"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="\ncodecheck_url"
-                    android:id="@+id/tbInfo"
-
-                    android:autoLink="web"/>
+                    android:id="@+id/tbInfo"/>
 
 
 

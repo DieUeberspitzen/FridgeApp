@@ -71,9 +71,9 @@ public class MainActivity extends ActionBarActivity  {
     String expiry_date = "";
 
     Calendar c = Calendar.getInstance();
-    int startYear = c.get(Calendar.YEAR);
-    int startMonth = c.get(Calendar.MONTH) + 1;
-    int startDay = c.get(Calendar.DAY_OF_MONTH) + 1;
+    int startYear;
+    int startMonth;
+    int startDay;
 
     ProgressDialog mProgressDialog;
     static MainActivity ma;
@@ -322,6 +322,11 @@ public class MainActivity extends ActionBarActivity  {
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             // TODO Auto-generated method stub
             // Use the current date as the default date in the picker
+
+             startYear = c.get(Calendar.YEAR);
+             startMonth = c.get(Calendar.MONTH);
+             startDay = c.get(Calendar.DAY_OF_MONTH);
+
             DatePickerDialog dialog = new DatePickerDialog(MainActivity.this, this, startYear, startMonth, startDay);
             return dialog;
 
@@ -332,7 +337,7 @@ public class MainActivity extends ActionBarActivity  {
             // Do something with the date chosen by the user
             startYear = year;
             startMonth = monthOfYear + 1;
-            startDay = dayOfMonth + 1;
+            startDay = dayOfMonth;
             updateStartDateDisplay();
 
 
@@ -343,7 +348,15 @@ public class MainActivity extends ActionBarActivity  {
 
     private void updateStartDateDisplay() {
         final ListView listview = (ListView) findViewById(R.id.listview);
-        expiry_date = String.valueOf(startYear) + "-" + String.valueOf(startMonth) + "-" + String.valueOf(startDay);
+        String leading_zero_month = "";
+        String leading_zero_day = "";
+        if (startMonth < 10){
+            leading_zero_month = "0";
+        }
+        if (startDay < 10){
+            leading_zero_day = "0";
+        }
+        expiry_date = String.valueOf(startYear) + "-" + leading_zero_month + String.valueOf(startMonth) + "-" + leading_zero_day + String.valueOf(startDay);
         Product prod = dataSource.createProduct(title_for_list, description_for_list, image_for_list, url_for_list, expiry_date);
 
         ProductToList(dataSource.getProducts());

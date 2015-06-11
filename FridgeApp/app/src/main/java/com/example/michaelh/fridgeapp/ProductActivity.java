@@ -7,6 +7,8 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.text.Html;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -36,6 +38,7 @@ public class ProductActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product);
         Intent i = getIntent();
+
         this.titel = i.getStringExtra("titel");
         this.expiry = i.getStringExtra("expiry");
         this.description = i.getStringExtra("description");
@@ -50,10 +53,22 @@ public class ProductActivity extends ActionBarActivity {
         TextView tbinfo = (TextView) findViewById(R.id.tbInfo);
         ImageView imageview = (ImageView) findViewById(R.id.imageProduct);
 
+
+
+        String url_html = "<a href=\"" + url + "\">\nURL [codecheck.info]</a>";
+
+
+        System.out.println("\n\n" + url_html + "\n\n");
+
+        tbtitel.setMovementMethod(new ScrollingMovementMethod());
+        tbdescr.setMovementMethod(new ScrollingMovementMethod());
+        tbexp.setMovementMethod(new ScrollingMovementMethod());
+        tbinfo.setMovementMethod(android.text.method.LinkMovementMethod.getInstance());
+
         tbtitel.setText(titel);
         tbdescr.setText(description);
         tbexp.setText(expiry);
-        tbinfo.setText(url);
+        tbinfo.setText(Html.fromHtml(url_html));
 
         if(!(image.startsWith("http://www.codecheck.info/img/")))
         {
