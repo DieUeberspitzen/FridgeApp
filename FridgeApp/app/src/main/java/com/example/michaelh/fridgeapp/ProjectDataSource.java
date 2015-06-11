@@ -77,9 +77,10 @@ public class ProjectDataSource {
         return product;
     }
 
-    public Product getProduct(String titel)
+    public Product getProduct(String titel, String expiry)
     {
-        Cursor cursor = database.query(DbHelper.TABLE_FRIDGE, columns, dbHelper.COLUMN_NAME + "=" + "\""+ titel +"\"" ,null,null,null,null);
+        Cursor cursor = database.query(DbHelper.TABLE_FRIDGE, columns, dbHelper.COLUMN_NAME + "=" + "\""+ titel +"\"" + "AND "
+                + dbHelper.COLUMN_DATE + "=" +  "\"" + expiry + "\"",null,null,null,null);
        // Cursor cursor = database.query(DbHelper.TABLE_FRIDGE, columns, dbHelper.COLUMN_NAME  + "=" + titel,null,null,null,null);
         cursor.moveToFirst();
         Product prod = populateProject(cursor);

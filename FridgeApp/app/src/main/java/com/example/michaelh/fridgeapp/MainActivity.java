@@ -1,8 +1,12 @@
 package com.example.michaelh.fridgeapp;
 
 
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 
+import android.app.DatePickerDialog;
+import android.app.Dialog;
+import android.app.DialogFragment;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Build;
@@ -13,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.ListView;
 
 import android.content.Intent;
@@ -30,11 +35,13 @@ import org.jsoup.select.Elements;
 
 import android.os.AsyncTask;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.concurrent.ExecutionException;
@@ -62,6 +69,11 @@ public class MainActivity extends ActionBarActivity  {
     String image_for_list = "";
     String url_for_list = "";
     String expiry_date = "";
+
+    Calendar c = Calendar.getInstance();
+    int startYear = c.get(Calendar.YEAR);
+    int startMonth = c.get(Calendar.MONTH) + 1;
+    int startDay = c.get(Calendar.DAY_OF_MONTH) + 1;
 
     ProgressDialog mProgressDialog;
     static MainActivity ma;
@@ -113,10 +125,11 @@ public class MainActivity extends ActionBarActivity  {
                 Intent i = new Intent();
                 HashMap<String, String> temp = (HashMap<String, String>)parent.getItemAtPosition(position);
                 titel = temp.get(FIRST_COLUMN);
+                expiry_date = temp.get(SECOND_COLUMN);
                 //System.out.print("ersd" + titel + "\n");
                 i.setClass(MainActivity.this, ProductActivity.class);
                 i.putExtra("titel", titel);
-                Product prod = dataSource.getProduct(titel);
+                Product prod = dataSource.getProduct(titel,expiry_date);
                 i.putExtra("url", prod.get_url());
                 i.putExtra("expiry", prod.get_expiry());
                 i.putExtra("image", prod.get_image());
@@ -160,7 +173,7 @@ public class MainActivity extends ActionBarActivity  {
         for(Product product: listproduct) {
             HashMap<String, String> temp = new HashMap<String, String>();
             temp.put(FIRST_COLUMN, product.getTitle());
-            temp.put(SECOND_COLUMN, product.getDescription());
+            temp.put(SECOND_COLUMN, product.get_expiry());
 
 
             list.add(temp);
@@ -184,7 +197,7 @@ public class MainActivity extends ActionBarActivity  {
 
 
     public void WriteList(){
-        final ListView listview = (ListView) findViewById(R.id.listview);
+
 
         if (barcode != null) {
 
@@ -202,12 +215,11 @@ public class MainActivity extends ActionBarActivity  {
                 //title_for_list = "<find nix..sry>";
             }
             else {
-                Product prod = dataSource.createProduct(title_for_list, description_for_list, image_for_list, url_for_list, expiry_date);
+                DialogFragment dialogFragment = new StartDatePicker();
+                dialogFragment.show(getFragmentManager(), "start_date_picker");
 
-                ProductToList(dataSource.getProducts());
-                ListViewAdapter adapter = new ListViewAdapter(this, list);
 
-                listview.setAdapter(adapter);
+
             }
         }
     }
@@ -294,9 +306,50 @@ public class MainActivity extends ActionBarActivity  {
         protected void onPostExecute(Void result) {
             mProgressDialog.dismiss();
 
+
+
             WriteList();
         }
 
+    }
+
+     @SuppressLint("ValidFragment")
+     class StartDatePicker extends DialogFragment implements DatePickerDialog.OnDateSetListener{
+
+
+
+         @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            // TODO Auto-generated method stub
+            // Use the current date as the default date in the picker
+            DatePickerDialog dialog = new DatePickerDialog(MainActivity.this, this, startYear, startMonth, startDay);
+            return dialog;
+
+        }
+        public void onDateSet(DatePicker view, int year, int monthOfYear,
+                              int dayOfMonth) {
+            // TODO Auto-generated method stub
+            // Do something with the date chosen by the user
+            startYear = year;
+            startMonth = monthOfYear + 1;
+            startDay = dayOfMonth + 1;
+            updateStartDateDisplay();
+
+
+        }
+
+
+    }
+
+    private void updateStartDateDisplay() {
+        final ListView listview = (ListView) findViewById(R.id.listview);
+        expiry_date = String.valueOf(startYear) + "-" + String.valueOf(startMonth) + "-" + String.valueOf(startDay);
+        Product prod = dataSource.createProduct(title_for_list, description_for_list, image_for_list, url_for_list, expiry_date);
+
+        ProductToList(dataSource.getProducts());
+        ListViewAdapter adapter = new ListViewAdapter(this, list);
+
+        listview.setAdapter(adapter);
     }
 
 
