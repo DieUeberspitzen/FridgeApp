@@ -7,99 +7,8 @@
     tools:context="com.example.michaelh.fridgeapp.ProductActivity"
     android:id="@+id/relativeLayout">
 
-    <ImageView
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:id="@+id/imageProduct"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="100dp"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Titel des Produktes"
-        android:id="@+id/tbTitel"
-        android:layout_alignTop="@+id/imageProduct"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_toEndOf="@+id/imageProduct"
-        android:layout_toRightOf="@+id/imageProduct" />
 
-    <TextView
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Beschreibung"
-        android:id="@+id/tbDescr"
-        android:layout_below="@+id/tbTitel"
-        android:layout_alignRight="@+id/tbTitel"
-        android:layout_alignEnd="@+id/tbTitel"
-        android:layout_alignLeft="@+id/tbTitel"
-        android:layout_alignStart="@+id/tbTitel" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Ablaufdatum:"
-        android:id="@+id/labelExp"
-        android:layout_alignTop="@+id/tbExpDate"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Medium Text"
-        android:id="@+id/tbExpDate"
-        android:layout_centerVertical="true"
-        android:layout_alignLeft="@+id/tbDescr"
-        android:layout_alignStart="@+id/tbDescr" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Tage zum Ablauf:"
-        android:id="@+id/labelDaysToGo"
-        android:layout_marginTop="48dp"
-        android:layout_below="@+id/labelExp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Medium Text"
-        android:id="@+id/tbdays"
-        android:layout_alignTop="@+id/labelDaysToGo"
-        android:layout_toRightOf="@+id/imageProduct"
-        android:layout_toEndOf="@+id/imageProduct" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Weitere Informationen:"
-        android:id="@+id/labelInfo"
-        android:layout_below="@+id/labelDaysToGo"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="48dp" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Medium Text"
-        android:id="@+id/tbInfo"
-        android:layout_alignBottom="@+id/labelInfo"
-        android:layout_alignLeft="@+id/tbdays"
-        android:layout_alignStart="@+id/tbdays" />
 
     <LinearLayout
         android:orientation="horizontal"
@@ -114,7 +23,7 @@
         <Button
             android:layout_width="0dip"
             android:layout_height="match_parent"
-            android:text="Ändern"
+            android:text="ändern"
             android:layout_weight="0.5"
             android:background="#b0b0b0"
             android:layout_marginRight="5dip"
@@ -123,11 +32,153 @@
         <Button
             android:layout_width="0dip"
             android:layout_height="match_parent"
-            android:text="Delete"
+            android:text="löschen"
             android:layout_weight="0.5"
             android:background="#b0b0b0"
             android:layout_marginLeft="5dip"
             android:id="@+id/delete_button"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:weightSum="1"
+        android:layout_above="@+id/linearLayout">
+
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="0dip"
+            android:layout_weight="0.6"
+            android:weightSum="1">
+
+            <ImageView
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
+                android:id="@+id/imageProduct"
+                android:layout_marginRight="5dip"
+                android:layout_marginBottom="5dip"/>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
+                android:layout_marginLeft="5dip"
+                android:layout_marginBottom="5dip"
+                android:weightSum="1">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dip"
+                    android:layout_weight="0.5"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="Titel des Produktes"
+                    android:gravity="center"
+                    android:id="@+id/tbTitel"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dip"
+                    android:layout_weight="0.5"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Beschreibung"
+                    android:gravity="center"
+                    android:id="@+id/tbDescr" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="0dip"
+            android:layout_weight="0.4"
+            android:weightSum="1">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="0dip"
+                android:layout_weight="0.5"
+                android:weightSum="1"
+                android:layout_marginRight="5dip"
+                android:layout_marginTop="5dip"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dip"
+                    android:layout_weight="0.35"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Ablaufdatum:"
+                    android:gravity="right"
+                    android:id="@+id/labelExp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dip"
+                    android:layout_weight="0.35"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Tage zum Ablauf:"
+                    android:gravity="right"
+                    android:id="@+id/labelDaysToGo" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dip"
+                    android:layout_weight="0.3"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Weitere Informationen:"
+                    android:gravity="right"
+                    android:id="@+id/labelInfo" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="0dip"
+                android:layout_weight="0.5"
+                android:weightSum="1"
+                android:layout_marginTop="5dip"
+                android:layout_marginLeft="5dip"
+                android:layout_height="match_parent">
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dip"
+                    android:layout_weight="0.35"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Ablaufdatum"
+                    android:id="@+id/tbExpDate" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dip"
+                    android:layout_weight="0.35"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Tage zum Ablauf"
+                    android:id="@+id/tbDaysToGo" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dip"
+                    android:layout_weight="0.3"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="\ncodecheck_url"
+                    android:id="@+id/tbInfo"
+
+                    android:autoLink="web"/>
+
+
+
+            </LinearLayout>
+        </LinearLayout>
+
 
     </LinearLayout>
 
