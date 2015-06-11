@@ -21,6 +21,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.util.Calendar;
 import java.util.concurrent.ExecutionException;
 
 
@@ -32,6 +33,16 @@ public class ProductActivity extends ActionBarActivity {
     String expiry;
     String image;
     String description;
+
+    Calendar c = Calendar.getInstance();
+
+    final int actual_year = c.get(Calendar.YEAR);
+    final int actual_month = c.get(Calendar.MONTH);
+    final int actual_day = c.get(Calendar.DAY_OF_MONTH);
+
+    String leading_zero_month = "";
+    String leading_zero_day = "";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,24 +62,34 @@ public class ProductActivity extends ActionBarActivity {
         TextView tbdescr = (TextView) findViewById(R.id.tbDescr);
         TextView tbexp = (TextView) findViewById(R.id.tbExpDate);
         TextView tbinfo = (TextView) findViewById(R.id.tbInfo);
-        ImageView imageview = (ImageView) findViewById(R.id.imageProduct);
+        TextView tbtime = (TextView) findViewById(R.id.tbTimeToGo);
 
+        ImageView imageview = (ImageView) findViewById(R.id.imageProduct);
 
 
         String url_html = "<a href=\"" + url + "\">\nURL [codecheck.info]</a>";
 
-
-        System.out.println("\n\n" + url_html + "\n\n");
-
         tbtitel.setMovementMethod(new ScrollingMovementMethod());
         tbdescr.setMovementMethod(new ScrollingMovementMethod());
-        tbexp.setMovementMethod(new ScrollingMovementMethod());
+
         tbinfo.setMovementMethod(android.text.method.LinkMovementMethod.getInstance());
 
-        tbtitel.setText(titel);
-        tbdescr.setText(description);
+        tbtitel.setText(Html.fromHtml(titel));
+        tbdescr.setText(Html.fromHtml(description));
         tbexp.setText(expiry);
         tbinfo.setText(Html.fromHtml(url_html));
+
+        if (actual_month < 10){
+            leading_zero_month = "0";
+        }
+        if (actual_day < 10){
+            leading_zero_day = "0";
+        }
+
+        final String actual_date = String.valueOf(actual_year) + "-" + leading_zero_month + String.valueOf(actual_month) + "-" + leading_zero_day + String.valueOf(actual_day);
+
+        tbtime.setText(getDifference(actual_date, expiry));
+
 
         if(!(image.startsWith("http://www.codecheck.info/img/")))
         {
@@ -79,6 +100,15 @@ public class ProductActivity extends ActionBarActivity {
 
 
     }
+
+
+
+    public String getDifference (String actual_date, String expiry_date){
+
+        return "5 Tage";
+
+    }
+
 
 
     private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {

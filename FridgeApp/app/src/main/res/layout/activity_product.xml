@@ -163,8 +163,8 @@
                     android:layout_weight="0.35"
                     android:gravity="center_horizontal"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="Tage zum Ablauf"
-                    android:id="@+id/tbDaysToGo" />
+                    android:text="Zeit zum Ablauf"
+                    android:id="@+id/tbTimeToGo" />
 
                 <TextView
                     android:layout_width="match_parent"

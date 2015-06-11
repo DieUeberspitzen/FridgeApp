@@ -2,6 +2,7 @@ package com.example.michaelh.fridgeapp;
 
 import android.app.Activity;
 import android.test.ActivityInstrumentationTestCase2;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -73,7 +74,7 @@ public class ListViewAdapter extends BaseAdapter{
         }
 
         HashMap<String,String> map = list.get(pos);
-        holder.txtFirst.setText(map.get(FIRST_COLUMN));
+        holder.txtFirst.setText(Html.fromHtml(map.get(FIRST_COLUMN)));
         holder.txtSecond.setText(map.get(SECOND_COLUMN));
 
         return convertView;
