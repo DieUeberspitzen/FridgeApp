@@ -48,15 +48,18 @@ public class ProductActivity extends ActionBarActivity {
         TextView tbdescr = (TextView) findViewById(R.id.tbDescr);
         TextView tbexp = (TextView) findViewById(R.id.tbExpDate);
         TextView tbinfo = (TextView) findViewById(R.id.tbInfo);
-        ImageView image = (ImageView) findViewById(R.id.imageProduct);
+        ImageView imageview = (ImageView) findViewById(R.id.imageProduct);
 
         tbtitel.setText(titel);
         tbdescr.setText(description);
         tbexp.setText(expiry);
-        //tbinfo.setText(url);
+        tbinfo.setText(url);
 
-
-            new DownloadImageTask(image).execute(url);
+        if(!(image.startsWith("http://www.codecheck.info/img/")))
+        {
+            image = "http://www.ffwhirschhorn.de/images/Einsatzabteilung/Noch_kein_Bild_vorhanden.jpg";
+        }
+            new DownloadImageTask(imageview).execute(image);
 
 
 

@@ -119,7 +119,8 @@ public class MainActivity extends ActionBarActivity  {
                 Product prod = dataSource.getProduct(titel);
                 i.putExtra("url", prod.get_url());
                 i.putExtra("expiry", prod.get_expiry());
-                i.putExtra("image", prod.get_url());
+                i.putExtra("image", prod.get_image());
+                System.out.println(prod.getDescription());
                 i.putExtra("description", prod.getDescription());
 
                 startActivity(i);
