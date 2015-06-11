@@ -21,6 +21,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.concurrent.ExecutionException;
 
@@ -37,7 +39,7 @@ public class ProductActivity extends ActionBarActivity {
     Calendar c = Calendar.getInstance();
 
     final int actual_year = c.get(Calendar.YEAR);
-    final int actual_month = c.get(Calendar.MONTH);
+    final int actual_month = c.get(Calendar.MONTH) + 1;
     final int actual_day = c.get(Calendar.DAY_OF_MONTH);
 
     String leading_zero_month = "";
@@ -105,7 +107,38 @@ public class ProductActivity extends ActionBarActivity {
 
     public String getDifference (String actual_date, String expiry_date){
 
-        return "5 Tage";
+        System.out.println("\n\n" + actual_date + "\n\n");
+        System.out.println("\n\n" + expiry_date + "\n\n");
+
+
+        ArrayList<String> actual_date_parts = new ArrayList(Arrays.asList(actual_date.split("-")));
+        ArrayList<String> expiry_date_parts = new ArrayList(Arrays.asList(expiry_date.split("-")));
+
+        Calendar act = Calendar.getInstance();
+        act.clear();
+
+        act.set(Calendar.YEAR, Integer.parseInt(actual_date_parts.get(0)));
+        act.set(Calendar.MONTH, Integer.parseInt(actual_date_parts.get(1)));
+        act.set(Calendar.DATE, Integer.parseInt(actual_date_parts.get(2)));
+
+        long absolute_actual_date = act.getTimeInMillis();
+
+
+        Calendar exp = Calendar.getInstance();
+        exp.clear();
+
+        exp.set(Calendar.YEAR, Integer.parseInt(expiry_date_parts.get(0)));
+        exp.set(Calendar.MONTH, Integer.parseInt(expiry_date_parts.get(1)));
+        exp.set(Calendar.DATE, Integer.parseInt(expiry_date_parts.get(2)));
+
+        long absolute_expiry_date = exp.getTimeInMillis();
+
+        // let's assume the actual date is before the expiry date
+        long time_diff_in_millis = absolute_expiry_date - absolute_actual_date;
+        long time_diff_in_days = time_diff_in_millis / 1000 / 60 / 60 / 24;
+
+
+        return Long.toString(time_diff_in_days);
 
     }
 
