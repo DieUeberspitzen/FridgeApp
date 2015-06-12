@@ -27,7 +27,7 @@
             android:layout_height="match_parent"
             android:text="manuell hinzufügen"
             android:layout_weight="0.5"
-            android:background="#b0b0b0"
+            android:background="@drawable/button"
             android:layout_marginRight="5dip"
             android:id="@+id/add_product_manually" />
 
@@ -36,7 +36,7 @@
             android:layout_height="match_parent"
             android:text="SCAN"
             android:layout_weight="0.5"
-            android:background="#b0b0b0"
+            android:background="@drawable/button"
             android:layout_marginLeft="5dip"
             android:id="@+id/scan_button"/>
 

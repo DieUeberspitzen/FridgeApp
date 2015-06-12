@@ -201,11 +201,11 @@ public class MainActivity extends ActionBarActivity  {
 
         if (barcode != null) {
 
-            if(title_for_list.startsWith("Es wurde kein Produkt") || title_for_list == null)
+            if(title_for_list.startsWith("Es wurde kein Produkt") || title_for_list == null || title_for_list.startsWith("<"))
             {
 
                 Context context = getApplicationContext();
-                CharSequence text = "...find leider nix... =(";
+                CharSequence text = "Es wurden kein Resultat gefunden.";
                 int duration = Toast.LENGTH_SHORT;
 
                 Toast toast = Toast.makeText(context, text, duration);
@@ -240,9 +240,12 @@ public class MainActivity extends ActionBarActivity  {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
+
+        /*
         if (id == R.id.action_settings) {
             return true;
         }
+        */
 
         return super.onOptionsItemSelected(item);
     }
@@ -267,7 +270,7 @@ public class MainActivity extends ActionBarActivity  {
 
             mProgressDialog = new ProgressDialog(MainActivity.this);
             mProgressDialog.setTitle("Produktinformationen");
-            mProgressDialog.setMessage("...schau ma mol... =)");
+            mProgressDialog.setMessage("Suche Produkt ...");
             mProgressDialog.setIndeterminate(false);
             mProgressDialog.show();
 
@@ -327,8 +330,14 @@ public class MainActivity extends ActionBarActivity  {
              startMonth = c.get(Calendar.MONTH);
              startDay = c.get(Calendar.DAY_OF_MONTH);
 
-            DatePickerDialog dialog = new DatePickerDialog(MainActivity.this, this, startYear, startMonth, startDay);
-            return dialog;
+             DatePickerDialog dialog = new DatePickerDialog(MainActivity.this, this, startYear, startMonth, startDay);
+
+             dialog.getDatePicker().setCalendarViewShown(false);
+             dialog.getDatePicker().setSpinnersShown(true);
+
+             dialog.setTitle("Ablaufdatum des Produkts:");
+
+             return dialog;
 
         }
         public void onDateSet(DatePicker view, int year, int monthOfYear,

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -73,12 +74,19 @@ public class ProductActivity extends ActionBarActivity {
 
         tbtitel.setMovementMethod(new ScrollingMovementMethod());
         tbdescr.setMovementMethod(new ScrollingMovementMethod());
+        tbinfo.setMovementMethod(new ScrollingMovementMethod());
+
 
         tbinfo.setMovementMethod(android.text.method.LinkMovementMethod.getInstance());
 
+
+        ArrayList<String> new_date_format = new ArrayList(Arrays.asList(expiry.split("-")));
+
+        String expiry_new_format = new_date_format.get(2) + "." + new_date_format.get(1) + "." + new_date_format.get(0);
+
         tbtitel.setText(Html.fromHtml(titel));
         tbdescr.setText(Html.fromHtml(description));
-        tbexp.setText(expiry);
+        tbexp.setText(expiry_new_format);
         tbinfo.setText(Html.fromHtml(url_html));
 
         if (actual_month < 10){
@@ -90,8 +98,23 @@ public class ProductActivity extends ActionBarActivity {
 
         final String actual_date = String.valueOf(actual_year) + "-" + leading_zero_month + String.valueOf(actual_month) + "-" + leading_zero_day + String.valueOf(actual_day);
 
-        tbtime.setText(getDifference(actual_date, expiry));
+        String until_expiry_in_days = getDifference(actual_date, expiry);
 
+        ArrayList<String> positive_days = new ArrayList(Arrays.asList(until_expiry_in_days.split(" ")));
+
+        if (until_expiry_in_days.startsWith("-")){
+            tbtime.setTextColor(Color.parseColor("#ff0000"));
+        }
+        else if (Integer.parseInt(positive_days.get(0)) < 5 ){
+            tbtime.setTextColor(Color.parseColor("#eea114"));
+        }
+        else {
+            tbtime.setTextColor(Color.parseColor("#1eb61e"));
+        }
+
+
+
+        tbtime.setText(until_expiry_in_days);
 
         if(!(image.startsWith("http://www.codecheck.info/img/")))
         {
@@ -183,9 +206,13 @@ public class ProductActivity extends ActionBarActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
+
+        /*
         if (id == R.id.action_settings) {
             return true;
         }
+        */
+
 
         return super.onOptionsItemSelected(item);
     }
