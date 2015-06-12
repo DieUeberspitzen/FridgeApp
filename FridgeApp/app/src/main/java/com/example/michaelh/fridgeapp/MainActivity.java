@@ -241,11 +241,15 @@ public class MainActivity extends ActionBarActivity  {
 
         //noinspection SimplifiableIfStatement
 
+
         /*
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_sort) {
+
+            System.out.println("\n\nsettings\n\n");
             return true;
         }
         */
+
 
         return super.onOptionsItemSelected(item);
     }

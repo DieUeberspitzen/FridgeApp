@@ -82,6 +82,7 @@
                     android:text="Titel des Produktes"
                     android:textStyle="bold"
                     android:gravity="center"
+                    android:textColor="@android:color/background_dark"
                     android:id="@+id/tbTitel"/>
 
                 <TextView
