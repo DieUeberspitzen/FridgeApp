@@ -80,7 +80,7 @@ public class ProductActivity extends ActionBarActivity {
         tbinfo.setMovementMethod(android.text.method.LinkMovementMethod.getInstance());
 
 
-        ArrayList<String> new_date_format = new ArrayList(Arrays.asList(expiry.split("-")));
+        ArrayList<String> new_date_format = new ArrayList<String>(Arrays.asList(expiry.split("-")));
 
         String expiry_new_format = new_date_format.get(2) + "." + new_date_format.get(1) + "." + new_date_format.get(0);
 
@@ -100,7 +100,7 @@ public class ProductActivity extends ActionBarActivity {
 
         String until_expiry_in_days = getDifference(actual_date, expiry);
 
-        ArrayList<String> positive_days = new ArrayList(Arrays.asList(until_expiry_in_days.split(" ")));
+        ArrayList<String> positive_days = new ArrayList<String>(Arrays.asList(until_expiry_in_days.split(" ")));
 
         if (until_expiry_in_days.startsWith("-")){
             tbtime.setTextColor(Color.parseColor("#ff0000"));
@@ -134,8 +134,8 @@ public class ProductActivity extends ActionBarActivity {
         System.out.println("\n\n" + expiry_date + "\n\n");
 
 
-        ArrayList<String> actual_date_parts = new ArrayList(Arrays.asList(actual_date.split("-")));
-        ArrayList<String> expiry_date_parts = new ArrayList(Arrays.asList(expiry_date.split("-")));
+        ArrayList<String> actual_date_parts = new ArrayList<String>(Arrays.asList(actual_date.split("-")));
+        ArrayList<String> expiry_date_parts = new ArrayList<String>(Arrays.asList(expiry_date.split("-")));
 
         Calendar act = Calendar.getInstance();
         act.clear();

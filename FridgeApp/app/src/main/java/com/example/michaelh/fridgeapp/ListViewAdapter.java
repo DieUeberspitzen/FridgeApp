@@ -1,6 +1,7 @@
 package com.example.michaelh.fridgeapp;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.test.ActivityInstrumentationTestCase2;
 import android.text.Html;
 import android.view.LayoutInflater;
@@ -14,6 +15,8 @@ import static com.example.michaelh.fridgeapp.Constants.SECOND_COLUMN;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
 import java.util.HashMap;
 
 /**
@@ -73,9 +76,48 @@ public class ListViewAdapter extends BaseAdapter{
             holder=(ViewHolder) convertView.getTag();
         }
 
+        ProductActivity prod_act = new ProductActivity();
+
+        Calendar c = Calendar.getInstance();
+
+        final int actual_year = c.get(Calendar.YEAR);
+        final int actual_month = c.get(Calendar.MONTH) + 1;
+        final int actual_day = c.get(Calendar.DAY_OF_MONTH);
+
+        String leading_zero_month = "";
+        String leading_zero_day = "";
+
+        if (actual_month < 10){
+            leading_zero_month = "0";
+        }
+        if (actual_day < 10){
+            leading_zero_day = "0";
+        }
+
         HashMap<String,String> map = list.get(pos);
+
+        final String actual_date = String.valueOf(actual_year) + "-" + leading_zero_month + String.valueOf(actual_month) + "-" + leading_zero_day + String.valueOf(actual_day);
+        final String expiry_date = map.get(SECOND_COLUMN);
+
+        String days_until_expiry = prod_act.getDifference(actual_date, expiry_date);
+
+
         holder.txtFirst.setText(Html.fromHtml(map.get(FIRST_COLUMN)));
         holder.txtSecond.setText(map.get(SECOND_COLUMN));
+
+
+        ArrayList<String> positive_days = new ArrayList<String>(Arrays.asList(days_until_expiry.split(" ")));
+
+        if (days_until_expiry.startsWith("-")){
+            holder.txtSecond.setTextColor(Color.parseColor("#ff0000"));
+        }
+        else if (Integer.parseInt(positive_days.get(0)) < 5 ){
+            holder.txtSecond.setTextColor(Color.parseColor("#eea114"));
+        }
+        else {
+            holder.txtSecond.setTextColor(Color.parseColor("#1eb61e"));
+        }
+
 
         return convertView;
     }
