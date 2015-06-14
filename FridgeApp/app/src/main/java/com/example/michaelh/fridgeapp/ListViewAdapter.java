@@ -1,6 +1,11 @@
 package com.example.michaelh.fridgeapp;
 
 import android.app.Activity;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.test.ActivityInstrumentationTestCase2;
 import android.text.Html;
@@ -17,6 +22,7 @@ import org.w3c.dom.Text;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 
 /**
@@ -50,6 +56,10 @@ public class ListViewAdapter extends BaseAdapter{
         return 0;
     }
 
+    public Activity getActivity() {
+        return activity;
+    }
+
     private class ViewHolder{
         TextView txtFirst;
         TextView txtSecond;
@@ -63,17 +73,16 @@ public class ListViewAdapter extends BaseAdapter{
 
         LayoutInflater inflater = activity.getLayoutInflater();
 
-        if(convertView == null)
-        {
-            convertView = inflater.inflate(R.layout.colom_row,null);
+        if (convertView == null) {
+            convertView = inflater.inflate(R.layout.colom_row, null);
             holder = new ViewHolder();
 
             holder.txtFirst = (TextView) convertView.findViewById(R.id.TextFirst);
             holder.txtSecond = (TextView) convertView.findViewById(R.id.TextSecond);
 
             convertView.setTag(holder);
-        }else {
-            holder=(ViewHolder) convertView.getTag();
+        } else {
+            holder = (ViewHolder) convertView.getTag();
         }
 
         ProductActivity prod_act = new ProductActivity();
@@ -87,17 +96,21 @@ public class ListViewAdapter extends BaseAdapter{
         String leading_zero_month = "";
         String leading_zero_day = "";
 
-        if (actual_month < 10){
+        if (actual_month < 10) {
             leading_zero_month = "0";
         }
-        if (actual_day < 10){
+        if (actual_day < 10) {
             leading_zero_day = "0";
         }
 
-        HashMap<String,String> map = list.get(pos);
+        HashMap<String, String> map = list.get(pos);
 
         final String actual_date = String.valueOf(actual_year) + "-" + leading_zero_month + String.valueOf(actual_month) + "-" + leading_zero_day + String.valueOf(actual_day);
         final String expiry_date = map.get(SECOND_COLUMN);
+
+
+        int expire_soon = 0;
+
 
         String days_until_expiry = prod_act.getDifference(actual_date, expiry_date);
 
@@ -105,20 +118,33 @@ public class ListViewAdapter extends BaseAdapter{
         holder.txtFirst.setText(Html.fromHtml(map.get(FIRST_COLUMN)));
         holder.txtSecond.setText(map.get(SECOND_COLUMN));
 
+        /*
+        String asdf = map.get(SECOND_COLUMN);
+        System.out.println(asdf + "\n");
+        */
 
         ArrayList<String> positive_days = new ArrayList<String>(Arrays.asList(days_until_expiry.split(" ")));
 
-        if (days_until_expiry.startsWith("-")){
+        if (days_until_expiry.startsWith("-")) {
             holder.txtSecond.setTextColor(Color.parseColor("#ff0000"));
-        }
-        else if (Integer.parseInt(positive_days.get(0)) < 5 ){
+            expire_soon++;
+        } else if (Integer.parseInt(positive_days.get(0)) < 3) {
             holder.txtSecond.setTextColor(Color.parseColor("#eea114"));
-        }
-        else {
+            expire_soon++;
+        } else {
             holder.txtSecond.setTextColor(Color.parseColor("#1eb61e"));
+        }
+
+
+        if (expire_soon > 0) {
+
+            //((MainActivity)getActivity()).setIncreaseSoonExpire(1);
+            //((MainActivity)getActivity()).notification();
         }
 
 
         return convertView;
     }
+
+
 }

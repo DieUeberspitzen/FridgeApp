@@ -4,14 +4,21 @@ package com.example.michaelh.fridgeapp;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 
+import android.app.AlarmManager;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.ProgressDialog;
+import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.os.Build;
+import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -75,6 +82,8 @@ public class MainActivity extends ActionBarActivity  {
     int startMonth;
     int startDay;
 
+    int number_of_items_soon_expire = -1;
+
     ProgressDialog mProgressDialog;
     static MainActivity ma;
 
@@ -111,7 +120,6 @@ public class MainActivity extends ActionBarActivity  {
                 integrator.addExtra("PROMPT_MESSAGE", "Scannen Sie das gewünschte Produkt!");
                 integrator.initiateScan(IntentIntegrator.PRODUCT_CODE_TYPES);
             }
-
 
 
         });
@@ -164,6 +172,8 @@ public class MainActivity extends ActionBarActivity  {
         });
         */
 
+        setSoonExpire();
+        notification();
 
     }
 
@@ -191,6 +201,8 @@ public class MainActivity extends ActionBarActivity  {
             barcode = contents;
 
             new GetDataOnline().execute();
+
+            //displayNotification();
 
         }
     }
@@ -352,8 +364,6 @@ public class MainActivity extends ActionBarActivity  {
             startMonth = monthOfYear + 1;
             startDay = dayOfMonth;
             updateStartDateDisplay();
-
-
         }
 
 
@@ -376,6 +386,144 @@ public class MainActivity extends ActionBarActivity  {
         ListViewAdapter adapter = new ListViewAdapter(this, list);
 
         listview.setAdapter(adapter);
+    }
+
+
+
+    /*
+    protected void displayNotification() {
+        Log.i("Start", "notification");
+
+   //Invoking the default notification service
+
+
+        NotificationCompat.Builder  mBuilder = new NotificationCompat.Builder(this);
+
+        mBuilder.setContentTitle("Fridgee");
+        mBuilder.setContentText("Produkte laufen bald ab.");
+        mBuilder.setTicker("New Message Alert!");
+        mBuilder.setSmallIcon(R.drawable.ic_launcher);
+
+   //Increase notification number every time a new notification arrives
+        //mBuilder.setNumber(++numMessages);
+        //mBuilder.setNumber(42);
+
+   //Add Big View Specific Configuration
+        NotificationCompat.InboxStyle inboxStyle = new NotificationCompat.InboxStyle();
+
+        String[] events = new String[3];
+        events[0] = new String("This is first line....");
+        events[1] = new String("This is second line...");
+        events[2] = new String("This is third line...");
+
+        // Sets a title for the Inbox style big view
+        inboxStyle.setBigContentTitle("Bald verbrauchen:");
+
+        // Moves events into the big view
+        for (int i=0; i < events.length; i++) {
+            inboxStyle.addLine(events[i]);
+        }
+
+        mBuilder.setStyle(inboxStyle);
+
+   //Creates an explicit intent for an Activity in your app
+        Intent resultIntent = new Intent(this, MainActivity.class);
+
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
+        stackBuilder.addParentStack(MainActivity.class);
+
+   //Adds the Intent that starts the Activity to the top of the stack
+        stackBuilder.addNextIntent(resultIntent);
+        PendingIntent resultPendingIntent =stackBuilder.getPendingIntent(0,PendingIntent.FLAG_UPDATE_CURRENT);
+
+        mBuilder.setContentIntent(resultPendingIntent);
+        NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+
+        long time = new Date().getTime();
+        String tmpStr = String.valueOf(time);
+        String last4Str = tmpStr.substring(tmpStr.length() - 5);
+        int notification_id = Integer.valueOf(last4Str);
+
+
+   //notificationID allows you to update the notification later on
+        mNotificationManager.notify(notification_id, mBuilder.build());
+    }
+
+    */
+
+
+    public void notification() {
+
+        String ns = Context.NOTIFICATION_SERVICE;
+        NotificationManager notificationManager = (NotificationManager) getSystemService(ns);
+        int icon = R.drawable.ic_launcher;
+        CharSequence tickerText = "Fridgee";
+        long when = System.currentTimeMillis();
+
+
+        Notification checkin_notification = new Notification(icon, tickerText,
+                when);
+        Context context = getApplicationContext();
+        CharSequence contentTitle = "Fridgee";
+        CharSequence contentText = "Sie sollten " + Integer.toString(number_of_items_soon_expire + 1) + " Artikel bald verbrauchen.";
+
+        Intent notificationIntent = new Intent(context, MainActivity.class);
+        PendingIntent contentIntent = PendingIntent.getActivity(context, 0,
+                notificationIntent, 0);
+        checkin_notification.setLatestEventInfo(context, contentTitle,
+                contentText, contentIntent);
+        checkin_notification.flags = Notification.FLAG_AUTO_CANCEL;
+
+        long time = new Date().getTime();
+        String tmpStr = String.valueOf(time);
+        String last4Str = tmpStr.substring(tmpStr.length() - 5);
+        int notification_id = Integer.valueOf(last4Str);
+
+        notificationManager.notify(notification_id, checkin_notification);
+
+    }
+
+
+    public void setSoonExpire (){
+        ListView listview = (ListView) findViewById(R.id.listview);
+        Object temporary_list_item;
+        String temporary_expiry;
+
+        Calendar c = Calendar.getInstance();
+
+        final int actual_year = c.get(Calendar.YEAR);
+        final int actual_month = c.get(Calendar.MONTH) + 1;
+        final int actual_day = c.get(Calendar.DAY_OF_MONTH);
+
+        String leading_zero_month = "";
+        String leading_zero_day = "";
+
+        if (actual_month < 10) {
+            leading_zero_month = "0";
+        }
+        if (actual_day < 10) {
+            leading_zero_day = "0";
+        }
+
+        final String actual_date = String.valueOf(actual_year) + "-" + leading_zero_month + String.valueOf(actual_month) + "-" + leading_zero_day + String.valueOf(actual_day);
+
+
+        for (int counter = 0; counter < listview.getAdapter().getCount(); counter++){
+            temporary_list_item = listview.getAdapter().getItem(counter);
+
+            temporary_expiry = temporary_list_item.toString();
+            temporary_expiry = temporary_expiry.substring(temporary_expiry.length() - 11, temporary_expiry.length() - 1);
+
+            ProductActivity prod_act = new ProductActivity();
+            String days_until_expiry = prod_act.getDifference(actual_date, temporary_expiry);
+
+            if (Integer.parseInt(days_until_expiry) < 3){
+                number_of_items_soon_expire++;
+            }
+
+            System.out.println(temporary_expiry);
+        }
     }
 
 

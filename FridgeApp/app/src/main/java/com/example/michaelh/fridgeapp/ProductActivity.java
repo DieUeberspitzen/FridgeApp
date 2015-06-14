@@ -105,7 +105,7 @@ public class ProductActivity extends ActionBarActivity {
         if (until_expiry_in_days.startsWith("-")){
             tbtime.setTextColor(Color.parseColor("#ff0000"));
         }
-        else if (Integer.parseInt(positive_days.get(0)) < 5 ){
+        else if (Integer.parseInt(positive_days.get(0)) < 3){
             tbtime.setTextColor(Color.parseColor("#eea114"));
         }
         else {
@@ -129,10 +129,6 @@ public class ProductActivity extends ActionBarActivity {
 
 
     public String getDifference (String actual_date, String expiry_date){
-
-        System.out.println("\n\n" + actual_date + "\n\n");
-        System.out.println("\n\n" + expiry_date + "\n\n");
-
 
         ArrayList<String> actual_date_parts = new ArrayList<String>(Arrays.asList(actual_date.split("-")));
         ArrayList<String> expiry_date_parts = new ArrayList<String>(Arrays.asList(expiry_date.split("-")));
@@ -159,7 +155,6 @@ public class ProductActivity extends ActionBarActivity {
         // let's assume the actual date is before the expiry date
         long time_diff_in_millis = absolute_expiry_date - absolute_actual_date;
         long time_diff_in_days = time_diff_in_millis / 1000 / 60 / 60 / 24;
-
 
         return Long.toString(time_diff_in_days);
 
