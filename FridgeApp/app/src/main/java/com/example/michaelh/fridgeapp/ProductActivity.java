@@ -147,8 +147,10 @@ public class ProductActivity extends ActionBarActivity {
                         // do something when the OK button is clicked
 
                         dataSource.deleteProduct(id);
+                        //finish();
                         Intent it = new Intent();
                         it.setClass(ProductActivity.this, MainActivity.class);
+                        it.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(it);
                     }
                 });
