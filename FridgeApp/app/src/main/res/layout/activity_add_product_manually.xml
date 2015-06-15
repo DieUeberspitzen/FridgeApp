@@ -21,7 +21,7 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/button"
+        android:layout_above="@+id/addbutton"
         android:weightSum="1"
         android:layout_below="@+id/tbAddManually">
 
@@ -44,7 +44,7 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/editText"
+                android:id="@+id/tbTitel"
                 android:layout_weight="0.7"/>
 
         </LinearLayout>
@@ -68,7 +68,7 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/editText2"
+                android:id="@+id/tbdescr"
                 android:layout_weight="0.7"/>
 
         </LinearLayout>
@@ -80,7 +80,8 @@
             android:orientation="vertical"
             android:layout_height="0dip"
             android:layout_weight="0.3"
-            android:weightSum="1">
+            android:weightSum="1"
+            android:id="@+id/tbImage">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -93,7 +94,7 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/editText4"
+                android:id="@+id/tbUrlImage"
                 android:layout_weight="0.7"/>
 
         </LinearLayout>
@@ -107,7 +108,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="hinzufügen"
-        android:id="@+id/button"
+        android:id="@+id/addbutton"
         android:layout_gravity="center_horizontal"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true" />

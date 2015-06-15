@@ -93,10 +93,18 @@ public class ProductActivity extends ActionBarActivity {
 
         String expiry_new_format = new_date_format.get(2) + "." + new_date_format.get(1) + "." + new_date_format.get(0);
 
+
         tbtitel.setText(Html.fromHtml(titel));
         tbdescr.setText(Html.fromHtml(description));
         tbexp.setText(expiry_new_format);
-        tbinfo.setText(Html.fromHtml(url_html));
+        //System.out.println("test:" + url);
+        if(url.equals(""))
+        {
+            tbinfo.setText("None");
+        }
+        else {
+            tbinfo.setText(Html.fromHtml(url_html));
+        }
 
         if (actual_month < 10){
             leading_zero_month = "0";
@@ -125,7 +133,7 @@ public class ProductActivity extends ActionBarActivity {
 
         tbtime.setText(until_expiry_in_days);
 
-        if(!(image.startsWith("http://www.codecheck.info/img/")))
+       if(!(image.startsWith("http://www.codecheck.info/img/")))
         {
             image = "http://www.ffwhirschhorn.de/images/Einsatzabteilung/Noch_kein_Bild_vorhanden.jpg";
         }

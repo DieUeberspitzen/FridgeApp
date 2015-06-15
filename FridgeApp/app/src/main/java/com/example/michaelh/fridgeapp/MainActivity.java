@@ -141,6 +141,19 @@ public class MainActivity extends ActionBarActivity  {
 
         });
 
+        Button manuellAdd = (Button)findViewById(R.id.add_product_manually);
+        manuellAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent();
+                i.setClass(MainActivity.this, AddProductManuallyActivity.class);
+                startActivity(i);
+            }
+
+
+        });
+
+
 
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
