@@ -7,4 +7,5 @@
     <string name="expiry_date_text">Ablaufdatum:</string>
     <string name="placeholder_code">Platzhalter für Code</string>
     <string name="title_activity_product">Detailansicht</string>
+    <string name="title_activity_add_product_manually">AddProductManuallyActivity</string>
 </resources>
