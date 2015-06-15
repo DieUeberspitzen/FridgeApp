@@ -58,6 +58,7 @@ public class ProjectDataSource {
         return product;
     }
 
+    
     public Product populateProject(Cursor cursor) {
        int idIndex = cursor.getColumnIndex(DbHelper.COLUMN_ID);
        int titleIndex = cursor.getColumnIndex(DbHelper.COLUMN_NAME);
