@@ -1,6 +1,8 @@
 package com.example.michaelh.fridgeapp;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -63,7 +65,7 @@ public class ProductActivity extends ActionBarActivity {
         this.description = i.getStringExtra("description");
         this.image = i.getStringExtra("image");
         this.url = i.getStringExtra("url");
-        this.id = i.getLongExtra("id",0);
+        this.id = i.getLongExtra("id", 0);
         dataSource = MainActivity.dataSource;
 
 
@@ -135,10 +137,30 @@ public class ProductActivity extends ActionBarActivity {
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               dataSource.deleteProduct(id);
-                Intent it = new Intent();
-                it.setClass(ProductActivity.this, MainActivity.class);
-                startActivity(it);
+
+                AlertDialog.Builder myAlertDialog = new AlertDialog.Builder(ProductActivity.this);
+                myAlertDialog.setTitle("Sind Sie sicher?");
+                myAlertDialog.setMessage(Html.fromHtml(titel) + " wirklich löschen?");
+                myAlertDialog.setPositiveButton("Ja", new DialogInterface.OnClickListener() {
+
+                    public void onClick(DialogInterface arg0, int arg1) {
+                        // do something when the OK button is clicked
+
+                        dataSource.deleteProduct(id);
+                        Intent it = new Intent();
+                        it.setClass(ProductActivity.this, MainActivity.class);
+                        startActivity(it);
+                    }
+                });
+                myAlertDialog.setNegativeButton("Nein", new DialogInterface.OnClickListener() {
+
+                    public void onClick(DialogInterface arg0, int arg1) {
+                        // do something when the Cancel button is clicked
+                    }
+                });
+                myAlertDialog.show();
+
+
             }
 
 
