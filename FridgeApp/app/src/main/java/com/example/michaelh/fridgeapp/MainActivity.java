@@ -188,7 +188,8 @@ public class MainActivity extends ActionBarActivity  {
         */
 
 
-        Notification();
+        setSoonExpire();
+        if (number_of_items_soon_expire > 0) Notification();
 
     }
 
@@ -422,16 +423,14 @@ public class MainActivity extends ActionBarActivity  {
         Intent notificationIntent = new Intent(context, MainActivity.class);
         PendingIntent contentIntent = PendingIntent.getActivity(context, 0,
                 notificationIntent, 0);
+        //checkin_notification.setLatestEventInfo(context, contentTitle,
+        //        contentText, null);
         checkin_notification.setLatestEventInfo(context, contentTitle,
                 contentText, PendingIntent.getActivity(getApplicationContext(), 0, new Intent(), 0));
         checkin_notification.flags = Notification.FLAG_AUTO_CANCEL;
 
-        long time = new Date().getTime();
-        String tmpStr = String.valueOf(time);
-        String last4Str = tmpStr.substring(tmpStr.length() - 5);
-        int notification_id = Integer.valueOf(last4Str);
-
-        notificationManager.notify(notification_id, checkin_notification);
+        // notification_id zero because this overwrites it
+        notificationManager.notify(0, checkin_notification);
 
     }
 
