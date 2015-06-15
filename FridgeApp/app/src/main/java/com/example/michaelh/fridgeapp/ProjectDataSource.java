@@ -78,6 +78,11 @@ public class ProjectDataSource {
         return product;
     }
 
+    public void deleteProduct(long id)
+    {
+        database.delete(DbHelper.TABLE_FRIDGE, dbHelper.COLUMN_ID + "=" + id, null);
+    }
+
     public Product getProduct(String titel, String expiry)
     {
         Cursor cursor = database.query(DbHelper.TABLE_FRIDGE, columns, dbHelper.COLUMN_NAME + "=" + "\""+ titel +"\"" + "AND "

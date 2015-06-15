@@ -68,7 +68,7 @@ public class MainActivity extends ActionBarActivity  {
     private Product product;
     private ArrayList<HashMap<String,String>> list;
     private ArrayList<Product> products = new ArrayList<Product>();
-    ProjectDataSource dataSource;
+    public static ProjectDataSource dataSource;
 
 
     final String url_start = "http://www.codecheck.info/product.search?q=";
@@ -97,6 +97,11 @@ public class MainActivity extends ActionBarActivity  {
     private PendingIntent pendingIntent;
 
     ListView listview;
+
+    public ProjectDataSource getDataSource()
+    {
+        return dataSource;
+    }
 
 
     @Override
@@ -154,6 +159,8 @@ public class MainActivity extends ActionBarActivity  {
                 i.putExtra("expiry", prod.get_expiry());
                 i.putExtra("image", prod.get_image());
                 i.putExtra("description", prod.getDescription());
+                i.putExtra("id", prod.getID());
+
 
                 startActivity(i);
 

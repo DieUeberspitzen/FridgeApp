@@ -13,8 +13,12 @@ import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.google.zxing.integration.android.IntentIntegrator;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -36,6 +40,7 @@ public class ProductActivity extends ActionBarActivity {
     String expiry;
     String image;
     String description;
+    long id;
 
     Calendar c = Calendar.getInstance();
 
@@ -58,6 +63,8 @@ public class ProductActivity extends ActionBarActivity {
         this.description = i.getStringExtra("description");
         this.image = i.getStringExtra("image");
         this.url = i.getStringExtra("url");
+        this.id = i.getLongExtra("id",0);
+        dataSource = MainActivity.dataSource;
 
 
 
@@ -121,6 +128,21 @@ public class ProductActivity extends ActionBarActivity {
             image = "http://www.ffwhirschhorn.de/images/Einsatzabteilung/Noch_kein_Bild_vorhanden.jpg";
         }
             new DownloadImageTask(imageview).execute(image);
+
+
+        Button deleteButton = (Button)findViewById(R.id.delete_button);
+
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               dataSource.deleteProduct(id);
+                Intent it = new Intent();
+                it.setClass(ProductActivity.this, MainActivity.class);
+                startActivity(it);
+            }
+
+
+        });
 
 
 
