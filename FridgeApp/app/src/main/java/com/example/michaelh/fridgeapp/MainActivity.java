@@ -13,7 +13,10 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.app.TaskStackBuilder;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.ActionBarActivity;
@@ -51,7 +54,10 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.ExecutionException;
+import android.app.PendingIntent;
 
 
 import static com.example.michaelh.fridgeapp.Constants.FIRST_COLUMN;
@@ -87,13 +93,19 @@ public class MainActivity extends ActionBarActivity  {
     ProgressDialog mProgressDialog;
     static MainActivity ma;
 
+
+    private PendingIntent pendingIntent;
+
+    ListView listview;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
        ma = this;
-        ListView listview = (ListView) findViewById(R.id.listview);
+        listview = (ListView) findViewById(R.id.listview);
 
         dataSource = new ProjectDataSource(this);
         try {
@@ -131,13 +143,13 @@ public class MainActivity extends ActionBarActivity  {
                                     long id) {
 
                 Intent i = new Intent();
-                HashMap<String, String> temp = (HashMap<String, String>)parent.getItemAtPosition(position);
+                HashMap<String, String> temp = (HashMap<String, String>) parent.getItemAtPosition(position);
                 titel = temp.get(FIRST_COLUMN);
                 expiry_date = temp.get(SECOND_COLUMN);
                 //System.out.print("ersd" + titel + "\n");
                 i.setClass(MainActivity.this, ProductActivity.class);
                 i.putExtra("titel", titel);
-                Product prod = dataSource.getProduct(titel,expiry_date);
+                Product prod = dataSource.getProduct(titel, expiry_date);
                 i.putExtra("url", prod.get_url());
                 i.putExtra("expiry", prod.get_expiry());
                 i.putExtra("image", prod.get_image());
@@ -151,31 +163,36 @@ public class MainActivity extends ActionBarActivity  {
 
 
         /*
-        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        Calendar calendar = Calendar.getInstance();
 
-            //@TargetApi(Build.VERSION_CODES.JELLY_BEAN)
-            @Override
-            public void onItemClick(AdapterView<?> parent, final View view,
-                                    int position, long id) {
-                final String item = (String) parent.getItemAtPosition(position);
-                view.animate().setDuration(2000).alpha(0)
-                        .withEndAction(new Runnable() {
-                            @Override
-                            public void run() {
-                                list.remove(item);
-                                adapter.notifyDataSetChanged();
-                                view.setAlpha(1);
-                            }
-                        });
-            }
+        // we can set time by open date and time picker dialog
 
-        });
+        calendar.set(Calendar.HOUR_OF_DAY, 23);
+        calendar.set(Calendar.MINUTE, 59);
+        calendar.set(Calendar.SECOND, 0);
+
+        //setSoonExpire();
+
+
+        Intent intent1 = new Intent(MainActivity.this, AlarmReceiver.class);
+        intent1.putExtra("number_of_soon_exp", Integer.toString(number_of_items_soon_expire + 1));
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(
+                MainActivity.this, 0, intent1,
+                PendingIntent.FLAG_UPDATE_CURRENT);
+        AlarmManager am = (AlarmManager) MainActivity.this
+                .getSystemService(MainActivity.this.ALARM_SERVICE);
+        //am.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
+        //        AlarmManager.INTERVAL_DAY, pendingIntent);
+
+        am.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),AlarmManager.INTERVAL_DAY, pendingIntent);
         */
 
-        setSoonExpire();
-        notification();
+
+        Notification();
 
     }
+
+
 
     public void ProductToList(ArrayList<Product> listproduct) {
        list = new ArrayList<HashMap<String, String>>();
@@ -200,9 +217,7 @@ public class MainActivity extends ActionBarActivity  {
             String contents = result.getContents();
             barcode = contents;
 
-            new GetDataOnline().execute();
-
-            //displayNotification();
+            if (contents != null) new GetDataOnline().execute();
 
         }
     }
@@ -325,8 +340,6 @@ public class MainActivity extends ActionBarActivity  {
         protected void onPostExecute(Void result) {
             mProgressDialog.dismiss();
 
-
-
             WriteList();
         }
 
@@ -389,71 +402,9 @@ public class MainActivity extends ActionBarActivity  {
     }
 
 
+    public void Notification() {
 
-    /*
-    protected void displayNotification() {
-        Log.i("Start", "notification");
-
-   //Invoking the default notification service
-
-
-        NotificationCompat.Builder  mBuilder = new NotificationCompat.Builder(this);
-
-        mBuilder.setContentTitle("Fridgee");
-        mBuilder.setContentText("Produkte laufen bald ab.");
-        mBuilder.setTicker("New Message Alert!");
-        mBuilder.setSmallIcon(R.drawable.ic_launcher);
-
-   //Increase notification number every time a new notification arrives
-        //mBuilder.setNumber(++numMessages);
-        //mBuilder.setNumber(42);
-
-   //Add Big View Specific Configuration
-        NotificationCompat.InboxStyle inboxStyle = new NotificationCompat.InboxStyle();
-
-        String[] events = new String[3];
-        events[0] = new String("This is first line....");
-        events[1] = new String("This is second line...");
-        events[2] = new String("This is third line...");
-
-        // Sets a title for the Inbox style big view
-        inboxStyle.setBigContentTitle("Bald verbrauchen:");
-
-        // Moves events into the big view
-        for (int i=0; i < events.length; i++) {
-            inboxStyle.addLine(events[i]);
-        }
-
-        mBuilder.setStyle(inboxStyle);
-
-   //Creates an explicit intent for an Activity in your app
-        Intent resultIntent = new Intent(this, MainActivity.class);
-
-        TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
-        stackBuilder.addParentStack(MainActivity.class);
-
-   //Adds the Intent that starts the Activity to the top of the stack
-        stackBuilder.addNextIntent(resultIntent);
-        PendingIntent resultPendingIntent =stackBuilder.getPendingIntent(0,PendingIntent.FLAG_UPDATE_CURRENT);
-
-        mBuilder.setContentIntent(resultPendingIntent);
-        NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-
-
-        long time = new Date().getTime();
-        String tmpStr = String.valueOf(time);
-        String last4Str = tmpStr.substring(tmpStr.length() - 5);
-        int notification_id = Integer.valueOf(last4Str);
-
-
-   //notificationID allows you to update the notification later on
-        mNotificationManager.notify(notification_id, mBuilder.build());
-    }
-
-    */
-
-
-    public void notification() {
+        setSoonExpire();
 
         String ns = Context.NOTIFICATION_SERVICE;
         NotificationManager notificationManager = (NotificationManager) getSystemService(ns);
@@ -472,7 +423,7 @@ public class MainActivity extends ActionBarActivity  {
         PendingIntent contentIntent = PendingIntent.getActivity(context, 0,
                 notificationIntent, 0);
         checkin_notification.setLatestEventInfo(context, contentTitle,
-                contentText, contentIntent);
+                contentText, PendingIntent.getActivity(getApplicationContext(), 0, new Intent(), 0));
         checkin_notification.flags = Notification.FLAG_AUTO_CANCEL;
 
         long time = new Date().getTime();
@@ -485,10 +436,10 @@ public class MainActivity extends ActionBarActivity  {
     }
 
 
+
     public void setSoonExpire (){
-        ListView listview = (ListView) findViewById(R.id.listview);
-        Object temporary_list_item;
-        String temporary_expiry;
+
+        String expiry_to_check = "";
 
         Calendar c = Calendar.getInstance();
 
@@ -509,6 +460,29 @@ public class MainActivity extends ActionBarActivity  {
         final String actual_date = String.valueOf(actual_year) + "-" + leading_zero_month + String.valueOf(actual_month) + "-" + leading_zero_day + String.valueOf(actual_day);
 
 
+        number_of_items_soon_expire = -1;
+
+        ArrayList<Product> prod = dataSource.getProducts();
+        for (Product products_to_check_date : prod){
+            expiry_to_check = products_to_check_date.get_expiry();
+
+            //System.out.println("IIIIIIIIIIIIIIIIIIIIIIIIIII:\n\n" + expiry_to_check);
+
+            ProductActivity prod_act = new ProductActivity();
+            String days_until_expiry = prod_act.getDifference(actual_date, expiry_to_check);
+
+            if (Integer.parseInt(days_until_expiry) < 3){
+                number_of_items_soon_expire++;
+            }
+
+        }
+
+
+
+        System.out.println("do schau, es sind: \n\n\n" + Integer.toString(number_of_items_soon_expire+1));
+
+
+        /*
         for (int counter = 0; counter < listview.getAdapter().getCount(); counter++){
             temporary_list_item = listview.getAdapter().getItem(counter);
 
@@ -524,7 +498,19 @@ public class MainActivity extends ActionBarActivity  {
 
             System.out.println(temporary_expiry);
         }
+        */
     }
+
+    /*
+    public int getSoonExpire (){
+        setSoonExpire();
+        return number_of_items_soon_expire;
+    }
+
+    */
+
+
+
 
 
 }

@@ -109,9 +109,6 @@ public class ListViewAdapter extends BaseAdapter{
         final String expiry_date = map.get(SECOND_COLUMN);
 
 
-        int expire_soon = 0;
-
-
         String days_until_expiry = prod_act.getDifference(actual_date, expiry_date);
 
 
@@ -127,19 +124,10 @@ public class ListViewAdapter extends BaseAdapter{
 
         if (days_until_expiry.startsWith("-")) {
             holder.txtSecond.setTextColor(Color.parseColor("#ff0000"));
-            expire_soon++;
         } else if (Integer.parseInt(positive_days.get(0)) < 3) {
             holder.txtSecond.setTextColor(Color.parseColor("#eea114"));
-            expire_soon++;
         } else {
             holder.txtSecond.setTextColor(Color.parseColor("#1eb61e"));
-        }
-
-
-        if (expire_soon > 0) {
-
-            //((MainActivity)getActivity()).setIncreaseSoonExpire(1);
-            //((MainActivity)getActivity()).notification();
         }
 
 
