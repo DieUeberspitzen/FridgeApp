@@ -134,6 +134,8 @@ public class AddProductManuallyActivity extends ActionBarActivity {
 
         dataSource.createProduct(titel,descr,image_url,"",expiry_date);
 
+        System.out.println("\n\nimage_url = " + image_url);
+
         Intent it = new Intent();
         it.setClass(AddProductManuallyActivity.this, MainActivity.class);
         it.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

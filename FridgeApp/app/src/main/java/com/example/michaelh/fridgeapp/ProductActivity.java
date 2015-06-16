@@ -100,7 +100,7 @@ public class ProductActivity extends ActionBarActivity {
         //System.out.println("test:" + url);
         if(url.equals(""))
         {
-            tbinfo.setText("None");
+            tbinfo.setText("-");
         }
         else {
             tbinfo.setText(Html.fromHtml(url_html));
@@ -133,7 +133,11 @@ public class ProductActivity extends ActionBarActivity {
 
         tbtime.setText(until_expiry_in_days);
 
-       if(!(image.startsWith("http://www.codecheck.info/img/")))
+
+        System.out.println("\n\n\noltaaah, des bild lautet da: " + image);
+
+
+        if(!(image.startsWith("http://www.codecheck.info/img/") || image.endsWith(".jpg") || image.endsWith(".bmp") | image.endsWith(".png") || image.endsWith(".gif")))
         {
             image = "http://www.ffwhirschhorn.de/images/Einsatzabteilung/Noch_kein_Bild_vorhanden.jpg";
         }
