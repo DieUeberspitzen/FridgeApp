@@ -127,8 +127,8 @@ public class AddProductManuallyActivity extends ActionBarActivity {
         if (startDay < 10){
             leading_zero_day = "0";
         }
-        DialogFragment dialogFragment = new StartDatePicker();
-        dialogFragment.show(getFragmentManager(), "start_date_picker");
+        //DialogFragment dialogFragment = new StartDatePicker();
+        //dialogFragment.show(getFragmentManager(), "start_date_picker");
         String expiry_date = String.valueOf(startYear) + "-" + leading_zero_month + String.valueOf(startMonth) + "-" + leading_zero_day + String.valueOf(startDay);
 
 

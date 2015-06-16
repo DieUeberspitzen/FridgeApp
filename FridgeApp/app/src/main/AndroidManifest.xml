@@ -37,7 +37,11 @@
 
         <activity
             android:name=".AddProductManuallyActivity"
-            android:label="@string/title_activity_add_product_manually" >
+            android:label="Produkt hinzufügen"
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.michaelh.fridgeapp.MainActivity" />
         </activity>
     </application>
 

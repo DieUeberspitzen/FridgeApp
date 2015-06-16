@@ -148,7 +148,7 @@ public class ProductActivity extends ActionBarActivity {
 
                 AlertDialog.Builder myAlertDialog = new AlertDialog.Builder(ProductActivity.this);
                 myAlertDialog.setTitle("Sind Sie sicher?");
-                myAlertDialog.setMessage(Html.fromHtml(titel) + " wirklich löschen?");
+                myAlertDialog.setMessage("\"" + Html.fromHtml(titel) + "\" wirklich löschen?");
                 myAlertDialog.setPositiveButton("Ja", new DialogInterface.OnClickListener() {
 
                     public void onClick(DialogInterface arg0, int arg1) {
