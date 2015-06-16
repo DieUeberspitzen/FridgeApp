@@ -1,0 +1,148 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="com.example.michaelh.fridgeapp.AddProductManuallyActivity">
+
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/addbutton"
+        android:weightSum="1"
+        android:layout_marginBottom="5dip"
+        android:layout_marginTop="5dip">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_height="0dip"
+            android:layout_weight="0.34"
+            android:weightSum="1">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Name:"
+                android:layout_marginRight="5dip"
+                android:id="@+id/textView"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/tbTitel"
+                android:background="@drawable/edittext_rounded"
+
+                android:imeOptions="actionNext"
+                android:singleLine="true"
+
+                android:minLines="3"
+                android:inputType="textCapSentences"
+                android:paddingLeft="10dip"
+                android:paddingRight="10dip"
+                android:paddingBottom="10dip"
+                android:paddingTop="10dip"
+                android:textCursorDrawable="@null"/>
+
+        </LinearLayout>
+
+        <View style="@style/Divider_hor"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_height="0dip"
+            android:layout_weight="0.33"
+            android:weightSum="1">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Beschreibung:"
+                android:layout_marginRight="5dip"
+                android:id="@+id/textView2"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/edittext_rounded"
+
+                android:imeOptions="actionNext"
+                android:singleLine="true"
+
+                android:minLines="3"
+                android:inputType="textCapSentences"
+                android:paddingLeft="10dip"
+                android:paddingRight="10dip"
+                android:paddingBottom="10dip"
+                android:paddingTop="10dip"
+                android:id="@+id/tbdescr"
+                android:textCursorDrawable="@null"/>
+            />
+
+        </LinearLayout>
+
+
+        <View style="@style/Divider_hor"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_height="0dip"
+            android:layout_weight="0.33"
+            android:weightSum="1"
+            android:id="@+id/tbImage">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="URL zu Bild:"
+                android:layout_marginRight="5dip"
+                android:id="@+id/textView4"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/edittext_rounded"
+
+                android:imeOptions="actionDone"
+                android:singleLine="true"
+
+                android:minLines="3"
+                android:inputType="text"
+                android:paddingLeft="10dip"
+                android:paddingRight="10dip"
+                android:paddingBottom="10dip"
+                android:paddingTop="10dip"
+                android:id="@+id/tbUrlImage"
+                android:textCursorDrawable="@null"/>
+            />
+
+        </LinearLayout>
+
+
+
+
+    </LinearLayout>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="zum Ablaufdatum"
+        android:id="@+id/addbutton"
+        android:layout_gravity="center_horizontal"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/button" />
+</RelativeLayout>

@@ -1,0 +1,191 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="com.example.michaelh.fridgeapp.ProductActivity"
+    android:id="@+id/relativeLayout">
+
+
+
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:weightSum="1"
+        android:paddingTop="10dip"
+        android:id="@+id/linearLayout">
+
+        <Button
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:text="ändern"
+            android:layout_weight="0.5"
+            android:background="@drawable/button"
+            android:layout_marginRight="5dip"
+            android:id="@+id/edit_button" />
+
+        <Button
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:text="löschen"
+            android:layout_weight="0.5"
+            android:background="@drawable/button"
+            android:layout_marginLeft="5dip"
+            android:id="@+id/delete_button"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:weightSum="1"
+        android:layout_above="@+id/linearLayout">
+
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="0dip"
+            android:layout_weight="0.6"
+            android:weightSum="1">
+
+            <ImageView
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
+                android:id="@+id/imageProduct"
+                android:layout_marginRight="5dip"
+                android:layout_marginBottom="5dip"/>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
+                android:layout_marginLeft="5dip"
+                android:layout_marginBottom="5dip"
+                android:weightSum="1">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dip"
+                    android:layout_weight="0.5"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="Titel des Produktes"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:id="@+id/tbTitel"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dip"
+                    android:layout_weight="0.5"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Beschreibung"
+                    android:textStyle="italic"
+                    android:gravity="center"
+                    android:id="@+id/tbDescr" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="0dip"
+            android:layout_weight="0.4"
+            android:weightSum="1">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="0dip"
+                android:layout_weight="0.5"
+                android:weightSum="1"
+                android:layout_marginRight="5dip"
+                android:layout_marginTop="10dip"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dip"
+                    android:layout_weight="0.4"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Ablaufdatum:"
+                    android:gravity="right"
+                    android:id="@+id/labelExp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dip"
+                    android:layout_weight="0.35"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Tage zum Ablauf:"
+                    android:gravity="right"
+                    android:id="@+id/labelDaysToGo" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dip"
+                    android:layout_weight="0.25"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Weitere Informationen:"
+                    android:gravity="right"
+                    android:id="@+id/labelInfo" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="0dip"
+                android:layout_weight="0.5"
+                android:weightSum="1"
+                android:layout_marginTop="10dip"
+                android:layout_marginLeft="5dip"
+                android:layout_height="match_parent">
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dip"
+                    android:layout_weight="0.4"
+                    android:gravity="center_horizontal"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Ablaufdatum"
+                    android:id="@+id/tbExpDate" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dip"
+                    android:layout_weight="0.35"
+                    android:gravity="center_horizontal"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textStyle="bold"
+                    android:text="Zeit zum Ablauf"
+                    android:id="@+id/tbTimeToGo" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dip"
+                    android:layout_weight="0.25"
+                    android:gravity="center_horizontal"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="\ncodecheck_url"
+                    android:id="@+id/tbInfo"/>
+
+
+
+            </LinearLayout>
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</RelativeLayout>

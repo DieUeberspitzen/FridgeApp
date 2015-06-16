@@ -1,9 +1,11 @@
 <resources>
-    <string name="app_name">FridgeApp</string>
+    <string name="app_name">Fridgee</string>
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
-    <string name="just_a_test">Hier könnte Ihre Werbung stehen.</string>
+    <string name="product_listing_name">Ihr Kühlschrank enthält:</string>
     <string name="expiry_date_text">Ablaufdatum:</string>
     <string name="placeholder_code">Platzhalter für Code</string>
+    <string name="title_activity_product">Detailansicht</string>
+    <string name="title_activity_add_product_manually">AddProductManuallyActivity</string>
 </resources>

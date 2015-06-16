@@ -1,6 +1,14 @@
 package com.example.michaelh.fridgeapp.uitest;
 
 import android.test.ActivityInstrumentationTestCase2;
+
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.michaelh.fridgeapp.MainActivity;
@@ -40,10 +48,25 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
        mySolo.clickOnButton("SCAN");
       // TextView text_view = mySolo.getText("Strichcode");
        mySolo.sleep(6000);
-       TextView text_view = (TextView) mySolo.getView(R.id.code_text);
-       String text = text_view.getText().toString();
+       //TextView text_view = (TextView) mySolo.getView(R.id.code_text);
+       //String text = text_view.getText().toString();
        //checkt ob text gesuchten Strichcode entspricht
-       assertEquals("90097737",text);  // Vöslauer prickelnd, 0.5l
+       //assertEquals("90097737",text);  // Vöslauer prickelnd, 0.5l
 
    }
+
+
+    public void testListElement() {
+        mySolo.clickOnButton("SCAN");
+        // TextView text_view = mySolo.getText("Strichcode");
+        mySolo.sleep(6000);
+        //TextView text_view = (TextView) mySolo.getView(R.id.code_text);
+        //String text = text_view.getText().toString();
+
+        ListView lv = (ListView)mySolo.getView(R.id.listview);
+        String selectedFromList = (String)(lv.getItemAtPosition(0));
+        //checkt ob text gesuchten Strichcode entspricht
+        assertEquals("9015160250289",selectedFromList);  // Almdudler, 0.5l
+
+    }
 }
