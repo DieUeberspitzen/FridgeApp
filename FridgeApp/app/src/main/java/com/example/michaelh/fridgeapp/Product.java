@@ -16,10 +16,6 @@ public class Product {
     private String _expiry;
 
 
-
-
-
-
     public Product(String title) {
      this._title = title;
     }

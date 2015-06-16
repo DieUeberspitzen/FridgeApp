@@ -22,11 +22,18 @@ import android.widget.TextView;
 
 import com.google.zxing.integration.android.IntentIntegrator;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.select.Elements;
+
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -69,7 +76,6 @@ public class ProductActivity extends ActionBarActivity {
         dataSource = MainActivity.dataSource;
 
 
-
         TextView tbtitel = (TextView) findViewById(R.id.tbTitel);
         TextView tbdescr = (TextView) findViewById(R.id.tbDescr);
         TextView tbexp = (TextView) findViewById(R.id.tbExpDate);
@@ -97,7 +103,7 @@ public class ProductActivity extends ActionBarActivity {
         tbtitel.setText(Html.fromHtml(titel));
         tbdescr.setText(Html.fromHtml(description));
         tbexp.setText(expiry_new_format);
-        //System.out.println("test:" + url);
+
         if(url.equals(""))
         {
             tbinfo.setText("-");
@@ -130,16 +136,12 @@ public class ProductActivity extends ActionBarActivity {
         }
 
 
-
         tbtime.setText(until_expiry_in_days);
-
-
-        System.out.println("\n\n\noltaaah, des bild lautet da: " + image);
 
 
         if(!(image.startsWith("http://www.codecheck.info/img/") || image.endsWith(".jpg") || image.endsWith(".bmp") | image.endsWith(".png") || image.endsWith(".gif")))
         {
-            image = "http://www.ffwhirschhorn.de/images/Einsatzabteilung/Noch_kein_Bild_vorhanden.jpg";
+            image = "http://img1.wikia.nocookie.net/__cb20121110160830/vampirediaries/de/images/4/48/Kein_bild.jpg";
         }
             new DownloadImageTask(imageview).execute(image);
 
@@ -257,14 +259,6 @@ public class ProductActivity extends ActionBarActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-
-        /*
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        */
 
 
         return super.onOptionsItemSelected(item);

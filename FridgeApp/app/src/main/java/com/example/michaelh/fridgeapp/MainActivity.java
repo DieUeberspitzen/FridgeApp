@@ -181,34 +181,9 @@ public class MainActivity extends ActionBarActivity  {
         });
 
 
-        /*
-        Calendar calendar = Calendar.getInstance();
-
-        // we can set time by open date and time picker dialog
-
-        calendar.set(Calendar.HOUR_OF_DAY, 23);
-        calendar.set(Calendar.MINUTE, 59);
-        calendar.set(Calendar.SECOND, 0);
-
-        //setSoonExpire();
-
-
-        Intent intent1 = new Intent(MainActivity.this, AlarmReceiver.class);
-        intent1.putExtra("number_of_soon_exp", Integer.toString(number_of_items_soon_expire + 1));
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(
-                MainActivity.this, 0, intent1,
-                PendingIntent.FLAG_UPDATE_CURRENT);
-        AlarmManager am = (AlarmManager) MainActivity.this
-                .getSystemService(MainActivity.this.ALARM_SERVICE);
-        //am.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
-        //        AlarmManager.INTERVAL_DAY, pendingIntent);
-
-        am.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),AlarmManager.INTERVAL_DAY, pendingIntent);
-        */
-
-
         setSoonExpire();
-        if (number_of_items_soon_expire > 0) Notification();
+
+        if (number_of_items_soon_expire >= 0) Notification();
 
     }
 
@@ -258,14 +233,10 @@ public class MainActivity extends ActionBarActivity  {
                 Toast toast = Toast.makeText(context, text, duration);
                 toast.show();
 
-
-                //title_for_list = "<find nix..sry>";
             }
             else {
                 DialogFragment dialogFragment = new StartDatePicker();
                 dialogFragment.show(getFragmentManager(), "start_date_picker");
-
-
 
             }
         }
@@ -285,18 +256,6 @@ public class MainActivity extends ActionBarActivity  {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-
-
-        /*
-        if (id == R.id.action_sort) {
-
-            System.out.println("\n\nsettings\n\n");
-            return true;
-        }
-        */
-
 
         return super.onOptionsItemSelected(item);
     }
@@ -442,10 +401,10 @@ public class MainActivity extends ActionBarActivity  {
         Intent notificationIntent = new Intent(context, MainActivity.class);
         PendingIntent contentIntent = PendingIntent.getActivity(context, 0,
                 notificationIntent, 0);
-        //checkin_notification.setLatestEventInfo(context, contentTitle,
-        //        contentText, null);
         checkin_notification.setLatestEventInfo(context, contentTitle,
-                contentText, PendingIntent.getActivity(getApplicationContext(), 0, new Intent(), 0));
+                contentText, null);
+        //checkin_notification.setLatestEventInfo(context, contentTitle,
+        //        contentText, PendingIntent.getActivity(getApplicationContext(), 0, new Intent(), 0));
         checkin_notification.flags = Notification.FLAG_AUTO_CANCEL;
 
         // notification_id zero because this overwrites it
@@ -484,8 +443,6 @@ public class MainActivity extends ActionBarActivity  {
         for (Product products_to_check_date : prod){
             expiry_to_check = products_to_check_date.get_expiry();
 
-            //System.out.println("IIIIIIIIIIIIIIIIIIIIIIIIIII:\n\n" + expiry_to_check);
-
             ProductActivity prod_act = new ProductActivity();
             String days_until_expiry = prod_act.getDifference(actual_date, expiry_to_check);
 
@@ -496,39 +453,7 @@ public class MainActivity extends ActionBarActivity  {
         }
 
 
-
-        System.out.println("do schau, es sind: \n\n\n" + Integer.toString(number_of_items_soon_expire+1));
-
-
-        /*
-        for (int counter = 0; counter < listview.getAdapter().getCount(); counter++){
-            temporary_list_item = listview.getAdapter().getItem(counter);
-
-            temporary_expiry = temporary_list_item.toString();
-            temporary_expiry = temporary_expiry.substring(temporary_expiry.length() - 11, temporary_expiry.length() - 1);
-
-            ProductActivity prod_act = new ProductActivity();
-            String days_until_expiry = prod_act.getDifference(actual_date, temporary_expiry);
-
-            if (Integer.parseInt(days_until_expiry) < 3){
-                number_of_items_soon_expire++;
-            }
-
-            System.out.println(temporary_expiry);
-        }
-        */
     }
-
-    /*
-    public int getSoonExpire (){
-        setSoonExpire();
-        return number_of_items_soon_expire;
-    }
-
-    */
-
-
-
 
 
 }

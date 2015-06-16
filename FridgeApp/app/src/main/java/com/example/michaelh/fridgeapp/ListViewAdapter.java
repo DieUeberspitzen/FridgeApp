@@ -115,10 +115,6 @@ public class ListViewAdapter extends BaseAdapter{
         holder.txtFirst.setText(Html.fromHtml(map.get(FIRST_COLUMN)));
         holder.txtSecond.setText(map.get(SECOND_COLUMN));
 
-        /*
-        String asdf = map.get(SECOND_COLUMN);
-        System.out.println(asdf + "\n");
-        */
 
         ArrayList<String> positive_days = new ArrayList<String>(Arrays.asList(days_until_expiry.split(" ")));
 

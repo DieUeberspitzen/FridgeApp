@@ -15,8 +15,7 @@
         android:layout_above="@+id/addbutton"
         android:weightSum="1"
         android:layout_marginBottom="5dip"
-        android:layout_marginTop="5dip"
-        android:layout_below="@+id/tbAddManually">
+        android:layout_marginTop="5dip">
 
 
         <LinearLayout

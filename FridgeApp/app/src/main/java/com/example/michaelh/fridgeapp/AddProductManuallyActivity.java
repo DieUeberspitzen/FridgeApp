@@ -52,8 +52,6 @@ public class AddProductManuallyActivity extends ActionBarActivity {
                 DialogFragment dialogFragment = new StartDatePicker();
                 dialogFragment.show(getFragmentManager(), "start_date_picker");
 
-
-
             }
 
 
@@ -73,8 +71,6 @@ public class AddProductManuallyActivity extends ActionBarActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-
 
         return super.onOptionsItemSelected(item);
     }
@@ -127,14 +123,12 @@ public class AddProductManuallyActivity extends ActionBarActivity {
         if (startDay < 10){
             leading_zero_day = "0";
         }
-        //DialogFragment dialogFragment = new StartDatePicker();
-        //dialogFragment.show(getFragmentManager(), "start_date_picker");
+
         String expiry_date = String.valueOf(startYear) + "-" + leading_zero_month + String.valueOf(startMonth) + "-" + leading_zero_day + String.valueOf(startDay);
 
 
         dataSource.createProduct(titel,descr,image_url,"",expiry_date);
 
-        System.out.println("\n\nimage_url = " + image_url);
 
         Intent it = new Intent();
         it.setClass(AddProductManuallyActivity.this, MainActivity.class);
